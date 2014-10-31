@@ -1,0 +1,12 @@
+
+ # Module configuration
+module.tx_logging {
+	persistence {
+		storagePid = {$module.tx_logging.persistence.storagePid}
+	}
+	view {
+		templateRootPath = {$module.tx_logging.view.templateRootPath}
+		partialRootPath = {$module.tx_logging.view.partialRootPath}
+		layoutRootPath = {$module.tx_logging.view.layoutRootPath}
+	}
+}

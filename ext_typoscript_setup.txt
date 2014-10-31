@@ -1,0 +1,12 @@
+module.tx_logging {
+	persistence.classes {
+		GeorgRinger\Logging\Domain\Model\LogEntry {
+			mapping {
+				tableName = sys_log2
+				columns {
+					request_id.mapOnProperty = requestId
+				}
+			}
+		}
+	}
+}

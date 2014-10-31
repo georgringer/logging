@@ -1,0 +1,117 @@
+<f:layout name="Default" />
+
+<f:section name="content">
+	<h1>Listing for Log</h1>
+
+	<f:flashMessages />
+
+	<f:form name="demand" object="{demand}">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="tceforms-datetimefield-log_start">Date start</label>
+
+					<div class="input-group">
+						<f:form.textfield property="dateStart" id="tceforms-datetimefield-log_start" class="form-control" />
+						<span class="input-group-addon">
+							<span style="cursor:pointer;" id="picker-tceforms-datetimefield-log_start" class="t3-icon fa fa-calendar">&nbsp;</span></span>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="tceforms-datetimefield-log_end">Date end</label>
+
+					<div class="input-group">
+						<f:form.textfield property="dateEnd" id="tceforms-datetimefield-log_end" class="form-control" />
+						<span class="input-group-addon">
+							<span style="cursor:pointer;" id="picker-tceforms-datetimefield-log_end" class="t3-icon fa fa-calendar">&nbsp;</span></span>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3">
+
+				<div class="form-group">
+					<label for="log-request-id">Request ID</label>
+					<f:form.textfield property="requestId" id="log-request-id" class="form-control" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="log-levels">Levels</label>
+					<f:form.select size="8" multiple="1" property="levels" options="{levels}" id="log-levels" class="form-control" />
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="log-logmodes">Modes</label>
+					<f:form.select size="3" multiple="1" property="modes" options="{be:'BE', fe:'FE', cli:'CLI'}" id="log-logmodes" style="height:65px" class="form-control" />
+				</div>
+			</div>
+
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="log-channels">Channels</label>
+					<f:form.select size="3" multiple="1" property="channels" options="{channels}" id="log-channels" class="form-control" style="height:65px" />
+				</div>
+			</div>
+		</div>
+
+
+		<f:form.submit class="button" value="Filter" />
+	</f:form>
+
+	<f:if condition="{logs}">
+		<f:then>
+			<table class="t3-table">
+				<tr>
+					<th>date</th>
+					<th colspan="2">Channel</th>
+					<th>Level</th>
+					<th>message</th>
+					<th>user id</th>
+					<th>Request ID</th>
+					<th>context</th>
+					<th>extra</th>
+				</tr>
+
+				<f:for each="{logs}" as="log">
+					<f:render section="line" arguments="{log:log}" />
+				</f:for>
+			</table>
+		</f:then>
+		<f:else>
+			<div class="alert alert-info">
+				no logs available.
+			</div>
+		</f:else>
+	</f:if>
+
+</f:section>
+
+<f:section name="line">
+	<tr>
+		<td style="width:150px">
+			<f:format.date date="{log.datetime}" format="%D %T" />
+		</td>
+		<td>{log.mode}</td>
+		<td>{log.channel}</td>
+		<td>{log.levelName} ({log.level})</td>
+		<td>{log.message}</td>
+		<td>{log.userId}</td>
+		<td>{log.requestId}</td>
+		<td>
+			<f:if condition="{log.context}">
+				<f:debug inline="1" title="">{log.context}</f:debug>
+			</f:if>
+		</td>
+		<td>
+			<f:if condition="{log.extra}">
+				<f:debug inline="1" title="">{log.extra}</f:debug>
+			</f:if>
+		</td>
+	</tr>
+</f:section>
