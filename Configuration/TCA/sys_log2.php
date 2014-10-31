@@ -7,17 +7,7 @@ $GLOBALS['TCA']['sys_log2'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:logging/Resources/Private/Language/locallang_db.xlf:tx_logging_domain_model_log',
 		'label' => 'uid',
-//		'tstamp' => 'tstamp',
-//		'crdate' => 'crdate',
-//		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
-
-//		'versioningWS' => 2,
-//		'versioning_followPages' => TRUE,
-
-//		'languageField' => 'sys_language_uid',
-//		'transOrigPointerField' => 'l10n_parent',
-//		'transOrigDiffSourceField' => 'l10n_diffsource',
 		'searchFields' => '',
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('logging') . 'Resources/Public/Icons/tx_logging_domain_model_log.gif'
 	),
@@ -25,7 +15,7 @@ $GLOBALS['TCA']['sys_log2'] = array(
 		'showRecordFieldList' => '',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'channel,level,level_name,message,datetime,extra,context,mode,request_id,user_id'),
+		'1' => array('showitem' => 'channel,level,level_name,message,datetime,extra,context,mode,request_id,user_id,record_id,tablename'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -103,17 +93,19 @@ $GLOBALS['TCA']['sys_log2'] = array(
 				'type' => 'input',
 			),
 		),
+		'record_id' => array(
+			'exclude' => 1,
+			'label' => 'record_id',
+			'config' => array(
+				'type' => 'input',
+			),
+		),
+		'tablename' => array(
+			'exclude' => 1,
+			'label' => 'tablename',
+			'config' => array(
+				'type' => 'input',
+			),
+		),
 	),
-
-
-//	`channel` text NOT NULL,
-//  `level_name` varchar(100) DEFAULT NULL,
-//  `request_id` varchar(13) DEFAULT NULL,
-//  `context` text,
-//  `level` tinyint(3) DEFAULT NULL,
-//  `message` text NOT NULL,
-//  `datetime` datetime DEFAULT NULL,
-//  `extra` text NOT NULL,
-//  `mode` varchar(3) DEFAULT NULL,
-//  `user_id` int(11) DEFAULT NULL
 );

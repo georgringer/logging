@@ -85,6 +85,7 @@
 					<th>Level</th>
 					<th>message</th>
 					<th>user id</th>
+					<th>record</th>
 					<th>Request ID</th>
 					<th>context</th>
 					<th>extra</th>
@@ -115,6 +116,9 @@
 		<td>{log.message}</td>
 		<td>
 			<f:if condition="{log.userId}">{log.userId}</f:if>
+		</td>
+		<td>
+			<f:if condition="{log.recordId}">{log.tablename} {log.recordId}</f:if>
 		</td>
 		<td>{log.requestId}</td>
 		<td>

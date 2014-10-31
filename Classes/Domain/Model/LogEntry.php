@@ -62,6 +62,12 @@ class LogEntry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	/** @var int */
 	protected $userId;
 
+	/** @var int */
+	protected $recordId;
+
+	/** @var string */
+	protected $tablename;
+
 	/**
 	 * @return string
 	 */
@@ -200,5 +206,33 @@ class LogEntry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 	 */
 	public function setUserId($userId) {
 		$this->userId = $userId;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTablename() {
+		return $this->tablename;
+	}
+
+	/**
+	 * @param string $tablename
+	 */
+	public function setTablename($tablename) {
+		$this->tablename = $tablename;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getRecordId() {
+		return $this->recordId;
+	}
+
+	/**
+	 * @param int $recordId
+	 */
+	public function setRecordId($recordId) {
+		$this->recordId = $recordId;
 	}
 }
