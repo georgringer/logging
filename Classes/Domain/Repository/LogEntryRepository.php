@@ -57,6 +57,26 @@ class LogEntryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 		return $out;
 	}
 
+	public function getAllUsers() {
+		$out = array('' => '');
+		$tmp = array();
+
+		$rows = $this->getDb()->exec_SELECTgetRows('user_id,mode', 'sys_log2', '(mode="BE" OR mode="FE") AND user_id > 0', 'user_id,mode');
+		foreach ($rows as $row) {
+			$tmp[$row['mode']][] = $row['user_id'];
+		}
+
+		foreach ($tmp as $mode => $users) {
+			$table = $mode === 'BE' ? 'be_users' : 'fe_users';
+			$rows = $this->getDb()->exec_SELECTgetRows('*', $table, 'uid in (' . implode(',', $users) . ')');
+			foreach ($rows as $row) {
+				$out[$mode . '_' . $row['uid']] = sprintf('%s: %s (%s)', $mode, $row['username'], $row['uid']);
+			}
+		}
+
+		return $out;
+	}
+
 	/**
 	 * @param QueryInterface $query
 	 * @param Demand $demand
@@ -74,19 +94,73 @@ class LogEntryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 		if ($demand->getChannels()) {
 			$constraints[] = $query->in('channel', $demand->getChannels());
 		}
-		if ($demand->getDateStart()) {
-			$time = strtotime($demand->getDateStart());
-			$constraints[] = $query->greaterThanOrEqual('datetime', $this->getTime($time));
-		}
-		if ($demand->getDateEnd()) {
-			$time = strtotime($demand->getDateEnd());
-			$constraints[] = $query->lessThanOrEqual('datetime', $this->getTime($time));
-		}
 		if ($demand->getRequestId()) {
 			$constraints[] = $query->equals('requestId', $demand->getRequestId());
 		}
+		if ($demand->getUser()) {
+			$userInformation = explode('_', $demand->getUser());
+			if (count($userInformation) === 2) {
+				$constraints[] = $query->equals('mode', $userInformation[0]);
+				$constraints[] = $query->equals('userId', $userInformation[1]);
+			}
+		}
+
+		if ($demand->getDateRange()) {
+			$this->setTimeConstraints($constraints, $query, $demand);
+		}
 
 		return $constraints;
+	}
+
+	protected function setTimeConstraints(&$constraints, QueryInterface $query, Demand $demand) {
+		$startTime = 0;
+		$endTime = $GLOBALS['EXEC_TIME'];
+		switch ($demand->getDateRange()) {
+			case 1:
+				// This week
+				$week = (date('w') ?: 7) - 1;
+				$startTime = mktime(0, 0, 0) - $week * 3600 * 24;
+				break;
+			case 2:
+				// Last week
+				$week = (date('w') ?: 7) - 1;
+				$startTime = mktime(0, 0, 0) - ($week + 7) * 3600 * 24;
+				$endTime = mktime(0, 0, 0) - $week * 3600 * 24;
+				break;
+			case 3:
+				// Last 7 days
+				$startTime = mktime(0, 0, 0) - 7 * 3600 * 24;
+				break;
+			case 4:
+				// This month
+				$startTime = mktime(0, 0, 0, date('m'), 1);
+				break;
+			case 5:
+				// Last month
+				$startTime = mktime(0, 0, 0, date('m') - 1, 1);
+				$endTime = mktime(0, 0, 0, date('m'), 1);
+				break;
+			case 6:
+				// Last 31 days
+				$startTime = mktime(0, 0, 0) - 31 * 3600 * 24;
+				break;
+			case 7:
+				if ($demand->getDateStart()) {
+					$startTime = strtotime($demand->getDateStart());
+				}
+				if ($demand->getDateEnd()) {
+					$endTime = strtotime($demand->getDateEnd());
+				}
+		}
+
+		if ($startTime) {
+			$startTime = $this->getTime($startTime);
+			$constraints[] = $query->greaterThanOrEqual('datetime', $startTime);
+		}
+		if ($endTime) {
+			$endTime = $this->getTime($endTime);
+			$constraints[] = $query->lessThanOrEqual('datetime', $endTime);
+		}
 	}
 
 	/**
@@ -101,7 +175,8 @@ class LogEntryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	/**
 	 * @return \TYPO3\CMS\Core\Database\DatabaseConnection
 	 */
-	protected function getDb() {
+	protected
+	function getDb() {
 		return $GLOBALS['TYPO3_DB'];
 	}
 }

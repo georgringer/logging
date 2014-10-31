@@ -72,6 +72,17 @@ class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 				550 => 'alert',
 				600 => 'emergency'
 			),
+			'dateRanges' => array(
+				'',
+				'this week',
+				'last week',
+				'last 7 days',
+				'this month',
+				'last month',
+				'last 31 days',
+				'user defined',
+			),
+			'users' => $this->logEntryRepository->getAllUsers(),
 			'channels' => $this->logEntryRepository->getAllChannels()
 		));
 		$this->loadJsForDatepicker();

@@ -48,6 +48,16 @@ class Demand {
 	protected $channels;
 
 	/**
+	 * @var string
+	 */
+	protected $user;
+
+	/**
+	 * @var int
+	 */
+	protected $dateRange;
+
+	/**
 	 * @return string
 	 */
 	public function getDateStart() {
@@ -131,6 +141,31 @@ class Demand {
 		$this->channels = $channels;
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getUser() {
+		return $this->user;
+	}
 
+	/**
+	 * @param string $user
+	 */
+	public function setUser($user) {
+		$this->user = $user;
+	}
 
+	/**
+	 * @return int
+	 */
+	public function getDateRange() {
+		return (int)$this->dateRange;
+	}
+
+	/**
+	 * @param int $dateRange
+	 */
+	public function setDateRange($dateRange) {
+		$this->dateRange = $dateRange;
+	}
 }
