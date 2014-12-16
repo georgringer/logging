@@ -54,6 +54,8 @@ $GLOBALS['TCA']['sys_log2'] = array(
 			'exclude' => 1,
 			'label' => 'datetime',
 			'config' => array(
+				'eval' => 'datetime,required',
+				'dbType' => 'datetime',
 				'xtype'    => 'date',
 				'type' => 'input',
 			),

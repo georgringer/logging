@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2014-10-25T21:46:21Z" product-name="logging">
+		<header/>
+		<body>
+			<trans-unit id="mlang_tabs_tab">
+				<source>Logging</source>
+			</trans-unit>
+			<trans-unit id="mlang_labels_tablabel" xml:space="preserve">
+				<source>Report of the logging</source>
+			</trans-unit>
+			<trans-unit id="mlang_labels_tabdescr">
+				<source>Simple way to get a list of all things which are logged to the database of TYPO3.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
