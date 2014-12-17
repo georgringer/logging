@@ -3,6 +3,48 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2014-10-25T21:46:21Z" product-name="logging">
 		<header/>
 		<body>
+			<trans-unit id="list.header">
+				<source>Log view</source>
+			</trans-unit>
+			<trans-unit id="list.lead">
+				<source>List and filter all log messages</source>
+			</trans-unit>
+			<trans-unit id="clear.header">
+				<source>Clear logs</source>
+			</trans-unit>
+			<trans-unit id="clear.lead">
+				<source>Clear the logs by given date range.</source>
+			</trans-unit>
+			<trans-unit id="action.list">
+				<source>List</source>
+			</trans-unit>
+			<trans-unit id="action.clear">
+				<source>Clear</source>
+			</trans-unit>
+			<trans-unit id="dateStart">
+				<source>Date start</source>
+			</trans-unit>
+			<trans-unit id="dateEnd">
+				<source>Date end</source>
+			</trans-unit>
+			<trans-unit id="mode">
+				<source>Mode</source>
+			</trans-unit>
+			<trans-unit id="requestId">
+				<source>Request ID</source>
+			</trans-unit>
+			<trans-unit id="channel">
+				<source>Channel</source>
+			</trans-unit>
+			<trans-unit id="user">
+				<source>User</source>
+			</trans-unit>
+			<trans-unit id="submit">
+				<source>Submit</source>
+			</trans-unit>
+			<trans-unit id="countEntries">
+				<source>Count of entries</source>
+			</trans-unit>
 			<trans-unit id="level">
 				<source>Level</source>
 			</trans-unit>
@@ -53,6 +95,31 @@
 			</trans-unit>
 			<trans-unit id="dateRange.userDefined">
 				<source>user defined</source>
+			</trans-unit>
+
+			<trans-unit id="date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="message">
+				<source>Message</source>
+			</trans-unit>
+			<trans-unit id="userId">
+				<source>User ID</source>
+			</trans-unit>
+			<trans-unit id="record">
+				<source>Record</source>
+			</trans-unit>
+			<trans-unit id="context">
+				<source>Context</source>
+			</trans-unit>
+			<trans-unit id="extra">
+				<source>Extra</source>
+			</trans-unit>
+			<trans-unit id="toggle">
+				<source>Show/hide more</source>
+			</trans-unit>
+			<trans-unit id="noLogsFound">
+				<source>Sorry, no logs currently found</source>
 			</trans-unit>
 		</body>
 	</file>

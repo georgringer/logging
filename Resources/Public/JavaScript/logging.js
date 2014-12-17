@@ -15,4 +15,9 @@ jQuery(function () {
 			jQuery('#log-date-end-container').hide();
 		}
 	});
+
+
+	jQuery('.toggle-information .click').click(function() {
+		jQuery(this).parent().find('.content').toggle();
+	});
 });

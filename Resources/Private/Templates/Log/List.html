@@ -1,23 +1,29 @@
 <f:layout name="Default" />
 
 <f:section name="content">
-	<h1>Log view</h1>
+	<h1>
+		<f:translate key="list.header" />
+	</h1>
 
-	<p class="lead"></p>
-
-	<f:flashMessages />
+	<p class="lead">
+		<f:translate key="list.lead" />
+	</p>
 
 	<f:form name="demand" object="{demand}">
 		<div class="row">
 			<div class="col-sm-3">
 				<div class="form-group">
-					<label for="log-daterange">Date Range</label>
+					<label for="log-daterange">
+						<f:translate key="dateRange" />
+					</label>
 					<f:form.select property="dateRange" options="{dateRanges}" id="log-daterange" class="form-control" />
 				</div>
 			</div>
 			<div class="col-sm-2">
 				<div class="form-group" id="log-date-start-container">
-					<label for="tceforms-datetimefield-log_start">Date start</label>
+					<label for="tceforms-datetimefield-log_start">
+						<f:translate key="dateStart" />
+					</label>
 
 					<div class="input-group">
 						<f:form.textfield property="dateStart" id="tceforms-datetimefield-log_start" class="form-control" />
@@ -28,7 +34,9 @@
 			</div>
 			<div class="col-sm-2">
 				<div class="form-group" id="log-date-end-container">
-					<label for="tceforms-datetimefield-log_end">Date end</label>
+					<label for="tceforms-datetimefield-log_end">
+						<f:translate key="dateEnd" />
+					</label>
 
 					<div class="input-group">
 						<f:form.textfield property="dateEnd" id="tceforms-datetimefield-log_end" class="form-control" />
@@ -43,62 +51,78 @@
 		<div class="row">
 			<div class="col-sm-3">
 				<div class="form-group">
-					<label for="log-levels">Levels</label>
+					<label for="log-levels">
+						<f:translate key="level" />
+					</label>
 					<f:form.select size="8" multiple="1" property="levels" options="{levels}" id="log-levels" class="form-control" />
 				</div>
 			</div>
 			<div class="col-sm-2">
 				<div class="form-group">
-					<label for="log-logmodes">Modes</label>
+					<label for="log-logmodes">
+						<f:translate key="mode" />
+					</label>
 					<f:form.select size="3" multiple="1" property="modes" options="{be:'BE', fe:'FE', cli:'CLI'}" id="log-logmodes" style="height:65px" class="form-control" />
 				</div>
 
 				<div class="form-group">
-					<label for="log-request-id">Request ID</label>
+					<label for="log-request-id">
+						<f:translate key="requestId" />
+					</label>
 					<f:form.textfield property="requestId" id="log-request-id" class="form-control" />
 				</div>
 			</div>
 
 			<div class="col-sm-2">
 				<div class="form-group">
-					<label for="log-channels">Channels</label>
+					<label for="log-channels">
+						<f:translate key="channel" />
+					</label>
 					<f:form.select size="3" multiple="1" property="channels" options="{channels}" id="log-channels" class="form-control" style="height:65px" />
 				</div>
 				<div class="form-group">
-					<label for="log-log-user">User</label>
+					<label for="log-log-user">
+						<f:translate key="user" />
+					</label>
 					<f:form.select property="user" options="{users}" id="log-log-user" class="form-control" />
 				</div>
 			</div>
 		</div>
 
-
-		<f:form.submit class="button" value="Filter" />
+		<f:form.submit class="button" value="{f:translate(key:'submit')}" />
 	</f:form>
 
 	<f:if condition="{logs}">
 		<f:then>
-			<p>Found currently <strong>{f:count(subject:logs)}</strong> log entries!</p>
 			<table class="t3-table">
 				<tr>
-					<th>date</th>
-					<th colspan="2">Channel</th>
-					<th>Level</th>
-					<th>message</th>
-					<th>user id</th>
-					<th>record</th>
-					<th>Request ID</th>
-					<th>context</th>
-					<th>extra</th>
+					<th>{f:translate(key:'date')}</th>
+					<th>{f:translate(key:'mode')}</th>
+					<th>{f:translate(key:'channel')}</th>
+					<th>{f:translate(key:'level')}</th>
+					<th>{f:translate(key:'message')}</th>
+					<th>{f:translate(key:'userId')}</th>
+					<th>{f:translate(key:'record')}</th>
+					<th>{f:translate(key:'requestId')}</th>
+					<th>{f:translate(key:'context')}</th>
+					<th>{f:translate(key:'extra')}</th>
 				</tr>
 
 				<f:for each="{logs}" as="log">
 					<f:render section="line" arguments="{log:log}" />
 				</f:for>
+				<tfoot>
+				<tr>
+					<td colspan="10">
+						{f:translate(key:'countEntries')}: <strong>{f:count(subject:logs)}</strong>
+					</td>
+				</tr>
+				</tfoot>
 			</table>
 		</f:then>
 		<f:else>
 			<div class="alert alert-info">
-				no logs available.
+				<f:translate key="noLogsFound" />
 			</div>
 		</f:else>
 	</f:if>
@@ -123,12 +147,25 @@
 		<td>{log.requestId}</td>
 		<td>
 			<f:if condition="{log.context}">
-				<f:debug inline="1" title="">{log.context}</f:debug>
+				<div class="toggle-information">
+					<a href="javascript:void();" class="click">{f:translate(key:'toggle')}</a>
+
+					<div class="content" style="display: none">
+						<f:debug inline="1" title="">{log.context}</f:debug>
+					</div>
+				</div>
+
 			</f:if>
 		</td>
 		<td>
 			<f:if condition="{log.extra}">
-				<f:debug inline="1" title="">{log.extra}</f:debug>
+				<div class="toggle-information">
+					<a href="javascript:void();" class="click">{f:translate(key:'toggle')}</a>
+
+					<div class="content" style="display: none">
+						<f:debug inline="1" title="">{log.extra}</f:debug>
+					</div>
+				</div>
 			</f:if>
 		</td>
 	</tr>

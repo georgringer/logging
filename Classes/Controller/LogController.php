@@ -65,6 +65,15 @@ class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	}
 
 	/**
+	 * Clear the logs
+	 *
+	 * @return void
+	 */
+	public function clearAction() {
+
+	}
+
+	/**
 	 * Load some JS for the datepicker
 	 *
 	 * @return void

@@ -3,29 +3,22 @@
 		<div id="typo3-docheader">
 			<div class="typo3-docheader-functions">
 				<div class="left">
-					<f:be.buttons.csh />
 					<f:be.menus.actionMenu>
-						<f:be.menus.actionMenuItem label="Overview" controller="" action="list" />
+						<f:be.menus.actionMenuItem label="{f:translate(key:'action.list')}" controller="Log" action="list" />
+						<f:be.menus.actionMenuItem label="{f:translate(key:'action.clear')}" controller="Log" action="clear" />
 					</f:be.menus.actionMenu>
 				</div>
-				<div class="right">
-					<f:be.pagePath />
-					<f:be.pageInfo />
-				</div>
+				<div class="right"></div>
 			</div>
 			<div class="typo3-docheader-buttons">
-				<div class="left">
-
-				</div>
+				<div class="left"></div>
 				<div class="right">
 					<f:be.buttons.shortcut />
 				</div>
 			</div>
-
 		</div>
 		<div id="typo3-docbody">
 			<div id="typo3-inner-docbody">
-				<f:flashMessages renderMode="div" />
 				<f:render section="content" />
 			</div>
 		</div>
