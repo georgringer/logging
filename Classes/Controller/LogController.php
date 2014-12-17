@@ -1,42 +1,18 @@
 <?php
 namespace GeorgRinger\Logging\Controller;
 
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Monolog\Processor\MemoryPeakUsageProcessor;
-use Monolog\Processor\MemoryUsageProcessor;
-use Monolog\Processor\ProcessIdProcessor;
-use Monolog\Processor\WebProcessor;
-use Symfony\Component\Yaml\Yaml;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
-use TYPO3\CMS\Logging\Domain\Repository\LogEntryRepository;
-
-/***************************************************************
- *
- *  Copyright notice
- *
- *  (c) 2014
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+	/*
+	 * This file is part of the TYPO3 CMS project.
+	 *
+	 * It is free software; you can redistribute it and/or modify it under
+	 * the terms of the GNU General Public License, either version 2
+	 * of the License, or any later version.
+	 *
+	 * For the full copyright and license information, please read the
+	 * LICENSE.txt file that was distributed with this source code.
+	 *
+	 * The TYPO3 project - inspiring people to share!
+	 */
 
 /**
  * LogController
@@ -63,24 +39,24 @@ class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 			'logs' => $logs,
 			'demand' => $demand,
 			'levels' => array(
-				100 => 'debug',
-				200 => 'info',
-				250 => 'notice',
-				300 => 'warning',
-				400 => 'error',
-				500 => 'critical',
-				550 => 'alert',
-				600 => 'emergency'
+				100 => $this->translate('level.debug'),
+				200 => $this->translate('level.info'),
+				250 => $this->translate('level.notice'),
+				300 => $this->translate('level.warning'),
+				400 => $this->translate('level.error'),
+				500 => $this->translate('level.critical'),
+				550 => $this->translate('level.alert'),
+				600 => $this->translate('level.emergency')
 			),
 			'dateRanges' => array(
-				'',
-				'this week',
-				'last week',
-				'last 7 days',
-				'this month',
-				'last month',
-				'last 31 days',
-				'user defined',
+				0 => '',
+				1 => $this->translate('dateRange.thisWeek'),
+				2 => $this->translate('dateRange.lastWeek'),
+				3 => $this->translate('dateRange.last7Days'),
+				4 => $this->translate('dateRange.thisMonth'),
+				5 => $this->translate('dateRange.lastMonth'),
+				6 => $this->translate('dateRange.last31Days'),
+				7 => $this->translate('dateRange.userDefined'),
 			),
 			'users' => $this->logEntryRepository->getAllUsers(),
 			'channels' => $this->logEntryRepository->getAllChannels()
@@ -108,4 +84,14 @@ class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 		$pageRenderer->addInlineSettingArray('', $typo3Settings);
 	}
 
+	/**
+	 * Translate a message
+	 *
+	 * @param string $key
+	 * @param array $arguments
+	 * @return string
+	 */
+	protected function translate($key, $arguments = array()) {
+		return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($key, 'logging', $arguments);
+	}
 }

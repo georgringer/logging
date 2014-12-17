@@ -1,7 +1,8 @@
 #
-# Table structure for table 'sys_log'
+# Table structure for table 'sys_log2'
 #
-CREATE TABLE sys_log2 ( uid int(11) NOT NULL,
+CREATE TABLE sys_log2 (
+  uid int(11) NOT NULL,
   pid int(11) NOT NULL,
   channel text NOT NULL,
   level_name varchar(100) DEFAULT NULL,

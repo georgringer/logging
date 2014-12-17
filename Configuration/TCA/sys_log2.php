@@ -1,14 +1,15 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
+if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
 $GLOBALS['TCA']['sys_log2'] = array(
 	'ctrl' => array(
-		'title'	=> 'LLL:EXT:logging/Resources/Private/Language/locallang_db.xlf:tx_logging_domain_model_log',
+		'title' => 'LLL:EXT:logging/Resources/Private/Language/locallang_db.xlf:tx_logging_domain_model_log',
 		'label' => 'uid',
 		'dividers2tabs' => TRUE,
 		'searchFields' => '',
+		'hideTable' => TRUE,
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('logging') . 'Resources/Public/Icons/tx_logging_domain_model_log.gif'
 	),
 	'interface' => array(
@@ -21,7 +22,6 @@ $GLOBALS['TCA']['sys_log2'] = array(
 		'1' => array('showitem' => ''),
 	),
 	'columns' => array(
-
 		'channel' => array(
 			'exclude' => 1,
 			'label' => 'Channel',
@@ -56,7 +56,7 @@ $GLOBALS['TCA']['sys_log2'] = array(
 			'config' => array(
 				'eval' => 'datetime,required',
 				'dbType' => 'datetime',
-				'xtype'    => 'date',
+				'xtype' => 'date',
 				'type' => 'input',
 			),
 		),
