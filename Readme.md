@@ -7,32 +7,35 @@ Plans are to use monolog as logging API and a DatabaseHandler to log to the same
 ## Requirements
 
 * TYPO3.CMS latest master
-* patch https://review.typo3.org/#/c/33539/ applied
 * composer update to add monolog
 * require the monolog files, e.g. by using ```require_once(__DIR__ . '/../Packages/Libraries/autoload.php');``` in the AdditionalConfiguration.php file
 
 Configuration, e.g. in the AdditionalConfiguration.php: ::
 
-	$GLOBALS['TYPO3_CONF_VARS']['MONOLOG']['authentication'] = array(
+	$GLOBALS['TYPO3_CONF_VARS']['MONOLOG'] = array(
 		'processorConfiguration' => array(
-			'TYPO3\\CMS\\Core\\Log\\Monolog\\Processor\\Typo3Processor' => array()
+			\GeorgRinger\Logging\Log\Monolog\Processor\Typo3Processor::class => array()
 		),
 		'handlerConfiguration' => array(
-			'name' => 'Authentication',
+			'name' => 'General',
 			'handlers' => array(
-				'TYPO3\CMS\Core\Log\Monolog\Handler\DatabaseHandler' => array()
+				'Monolog\\Handler\\SyslogHandler' => array('syslogXXX'),
+				'Monolog\\Handler\\StreamHandler' => array(
+					PATH_site . 'typo3temp/out.log'
+				),
+				\GeorgRinger\Logging\Log\Monolog\Handler\DatabaseHandler::class => array()
 			)
 		)
 	);
-	$GLOBALS['TYPO3_CONF_VARS']['MONOLOG']['DataHandler'] = array(
-		'processorConfiguration' => array(
-			'TYPO3\\CMS\\Core\\Log\\Monolog\\Processor\\Typo3Processor' => array()
-		),
-		'handlerConfiguration' => array(
-			'name' => 'DataHandler',
-			'handlers' => array(
-				'TYPO3\CMS\Core\Log\Monolog\Handler\DatabaseHandler' => array()
-			)
-		)
-	);
+	
+	
+Note: this config works with PHP 5.5 only, if using PHP 5.4, replace ``::class`` constructs with the direct string of class. 
+
+## How to log
+
+Logging is then very simple and similiar to the used logging framework: ::
+
+	/** @var \Monolog\Logger $logger */
+	$logger = GeneralUtility::makeInstance(\GeorgRinger\Logging\Log\MonologManager::class)->getLogger(__CLASS__);
+	$logger->info('Some text', array('additional information' => 123));
 	
