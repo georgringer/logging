@@ -61,14 +61,14 @@ class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	protected function initializeView(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view) {
 		$view->assignMultiple(array(
 			'levels' => array(
-				100 => $this->translate('level.debug'),
-				200 => $this->translate('level.info'),
-				250 => $this->translate('level.notice'),
-				300 => $this->translate('level.warning'),
-				400 => $this->translate('level.error'),
-				500 => $this->translate('level.critical'),
-				550 => $this->translate('level.alert'),
-				600 => $this->translate('level.emergency')
+				100 => $this->translate('level.100'),
+				200 => $this->translate('level.200'),
+				250 => $this->translate('level.250'),
+				300 => $this->translate('level.300'),
+				400 => $this->translate('level.400'),
+				500 => $this->translate('level.500'),
+				550 => $this->translate('level.550'),
+				600 => $this->translate('level.600')
 			),
 			'dateRanges' => array(
 				0 => '',

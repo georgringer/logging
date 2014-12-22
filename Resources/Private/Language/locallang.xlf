@@ -57,28 +57,28 @@
 			<trans-unit id="level">
 				<source>Level</source>
 			</trans-unit>
-			<trans-unit id="level.debug">
+			<trans-unit id="level.100">
 				<source>Debug (100)</source>
 			</trans-unit>
-			<trans-unit id="level.info">
+			<trans-unit id="level.200">
 				<source>Info (200)</source>
 			</trans-unit>
-			<trans-unit id="level.notice">
-				<source>Noice (250)</source>
+			<trans-unit id="level.250">
+				<source>Notice (250)</source>
 			</trans-unit>
-			<trans-unit id="level.warning">
+			<trans-unit id="level.300">
 				<source>Warning (300)</source>
 			</trans-unit>
-			<trans-unit id="level.error">
+			<trans-unit id="level.400">
 				<source>Error (400)</source>
 			</trans-unit>
-			<trans-unit id="level.critical">
+			<trans-unit id="level.500">
 				<source>Critical (500)</source>
 			</trans-unit>
-			<trans-unit id="level.alert">
+			<trans-unit id="level.550">
 				<source>Alert (550)</source>
 			</trans-unit>
-			<trans-unit id="level.emergency">
+			<trans-unit id="level.600">
 				<source>Emergency (600)</source>
 			</trans-unit>
 			<trans-unit id="dateRange">
@@ -130,7 +130,6 @@
 			<trans-unit id="noLogsFound">
 				<source>Sorry, no logs currently found</source>
 			</trans-unit>
-
 			<trans-unit id="demoEntryAdded">
 				<source>The demo entry has been successfully added!</source>
 			</trans-unit>
