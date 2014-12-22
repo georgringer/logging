@@ -15,11 +15,20 @@
 			<trans-unit id="clear.lead">
 				<source>Clear the logs by given date range.</source>
 			</trans-unit>
+			<trans-unit id="demo.header">
+				<source>Add a demo entry</source>
+			</trans-unit>
+			<trans-unit id="demo.lead">
+				<source>Add a demo entry to test the extension.</source>
+			</trans-unit>
 			<trans-unit id="action.list">
 				<source>List</source>
 			</trans-unit>
 			<trans-unit id="action.clear">
 				<source>Clear</source>
+			</trans-unit>
+			<trans-unit id="action.demo">
+				<source>Demo</source>
 			</trans-unit>
 			<trans-unit id="dateStart">
 				<source>Date start</source>
@@ -120,6 +129,10 @@
 			</trans-unit>
 			<trans-unit id="noLogsFound">
 				<source>Sorry, no logs currently found</source>
+			</trans-unit>
+
+			<trans-unit id="demoEntryAdded">
+				<source>The demo entry has been successfully added!</source>
 			</trans-unit>
 		</body>
 	</file>

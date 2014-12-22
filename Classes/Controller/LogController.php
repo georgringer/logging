@@ -22,24 +22,44 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
-	 * @var \GeorgRinger\Logging\Domain\Repository\LogEntryRepository
-	 */
-	protected $logEntryRepository;
-
-	public function injectLogEntryRepository(\GeorgRinger\Logging\Domain\Repository\LogEntryRepository $logEntryRepository) {
-		$this->logEntryRepository = $logEntryRepository;
-	}
-
-	/**
 	 * @param \GeorgRinger\Logging\Domain\Model\Dto\Demand $demand
 	 * @return void
 	 */
 	public function listAction(\GeorgRinger\Logging\Domain\Model\Dto\Demand $demand = NULL) {
-		$logs = $this->logEntryRepository->findByDemand($demand);
-
 		$this->view->assignMultiple(array(
-			'logs' => $logs,
 			'demand' => $demand,
+			'logs' => $this->logEntryRepository->findByDemand($demand),
+			'users' => $this->logEntryRepository->getAllUsers(),
+			'channels' => $this->logEntryRepository->getAllChannels()
+		));
+		$this->loadJsForDatePicker();
+	}
+
+	/**
+	 * Clear the logs
+	 *
+	 * @return void
+	 */
+	public function clearAction() {
+
+	}
+
+	/**
+	 * @param \GeorgRinger\Logging\Domain\Model\Dto\Demo $demo
+	 */
+	public function demoAction(\GeorgRinger\Logging\Domain\Model\Dto\Demo $demo = NULL) {
+		$this->view->assign('demo', $demo);
+
+		if (!is_null($demo)) {
+			/** @var \Monolog\Logger $logger */
+			$logger = GeneralUtility::makeInstance(\GeorgRinger\Logging\Log\MonologManager::class)->getLogger(__CLASS__);
+			$logger->addRecord($demo->getLevel(), $demo->getMessage());
+			$this->view->assign('added', TRUE);
+		}
+	}
+
+	protected function initializeView(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view) {
+		$view->assignMultiple(array(
 			'levels' => array(
 				100 => $this->translate('level.debug'),
 				200 => $this->translate('level.info'),
@@ -59,20 +79,8 @@ class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 				5 => $this->translate('dateRange.lastMonth'),
 				6 => $this->translate('dateRange.last31Days'),
 				7 => $this->translate('dateRange.userDefined'),
-			),
-			'users' => $this->logEntryRepository->getAllUsers(),
-			'channels' => $this->logEntryRepository->getAllChannels()
+			)
 		));
-		$this->loadJsForDatePicker();
-	}
-
-	/**
-	 * Clear the logs
-	 *
-	 * @return void
-	 */
-	public function clearAction() {
-
 	}
 
 	/**
@@ -82,7 +90,7 @@ class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	 */
 	protected function loadJsForDatePicker() {
 		/** @var \TYPO3\CMS\Backend\Template\DocumentTemplate $documentTemplate */
-		$documentTemplate = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Backend\\Template\\DocumentTemplate');
+		$documentTemplate = GeneralUtility::makeInstance('TYPO3\\CMS\\Backend\\Template\\DocumentTemplate');
 		$pageRenderer = $documentTemplate->getPageRenderer();
 		$dateFormat = ($GLOBALS['TYPO3_CONF_VARS']['SYS']['USdateFormat'] ? array('MM-DD-YYYY', 'HH:mm MM-DD-YYYY') : array('DD-MM-YYYY', 'HH:mm DD-MM-YYYY'));
 		$pageRenderer->addInlineSetting('DateTimePicker', 'DateFormat', $dateFormat);
@@ -98,5 +106,14 @@ class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	 */
 	protected function translate($key, $arguments = array()) {
 		return LocalizationUtility::translate($key, 'logging', $arguments);
+	}
+
+	/**
+	 * @var \GeorgRinger\Logging\Domain\Repository\LogEntryRepository
+	 */
+	protected $logEntryRepository;
+
+	public function injectLogEntryRepository(\GeorgRinger\Logging\Domain\Repository\LogEntryRepository $logEntryRepository) {
+		$this->logEntryRepository = $logEntryRepository;
 	}
 }
