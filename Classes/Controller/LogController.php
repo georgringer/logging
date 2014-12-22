@@ -14,6 +14,7 @@ namespace GeorgRinger\Logging\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * LogController
@@ -62,7 +63,7 @@ class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 			'users' => $this->logEntryRepository->getAllUsers(),
 			'channels' => $this->logEntryRepository->getAllChannels()
 		));
-		$this->loadJsForDatepicker();
+		$this->loadJsForDatePicker();
 	}
 
 	/**
@@ -75,23 +76,17 @@ class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	}
 
 	/**
-	 * Load some JS for the datepicker
+	 * Load some JS for the datePicker
 	 *
 	 * @return void
 	 */
-	protected function loadJsForDatepicker() {
+	protected function loadJsForDatePicker() {
 		/** @var \TYPO3\CMS\Backend\Template\DocumentTemplate $documentTemplate */
 		$documentTemplate = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Backend\\Template\\DocumentTemplate');
 		$pageRenderer = $documentTemplate->getPageRenderer();
-		$pageRenderer->loadExtJS();
-		$pageRenderer->addJsFile($GLOBALS['BACK_PATH'] . 'sysext/backend/Resources/Public/JavaScript/tceforms.js');
-		$pageRenderer->addJsFile($GLOBALS['BACK_PATH'] . 'js/extjs/ux/Ext.ux.DateTimePicker.js');
-		$typo3Settings = array(
-			'datePickerUSmode' => $GLOBALS['TYPO3_CONF_VARS']['SYS']['USdateFormat'] ? 1 : 0,
-			'dateFormat' => array('j-n-Y', 'G:i j-n-Y'),
-			'dateFormatUS' => array('n-j-Y', 'G:i n-j-Y')
-		);
-		$pageRenderer->addInlineSettingArray('', $typo3Settings);
+		$dateFormat = ($GLOBALS['TYPO3_CONF_VARS']['SYS']['USdateFormat'] ? array('MM-DD-YYYY', 'HH:mm MM-DD-YYYY') : array('DD-MM-YYYY', 'HH:mm DD-MM-YYYY'));
+		$pageRenderer->addInlineSetting('DateTimePicker', 'DateFormat', $dateFormat);
+
 	}
 
 	/**
@@ -102,6 +97,6 @@ class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	 * @return string
 	 */
 	protected function translate($key, $arguments = array()) {
-		return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($key, 'logging', $arguments);
+		return LocalizationUtility::translate($key, 'logging', $arguments);
 	}
 }

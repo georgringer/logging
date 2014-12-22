@@ -35,7 +35,6 @@ class Demand {
 	 */
 	protected $levels;
 
-
 	/**
 	 * @var array
 	 */
@@ -97,10 +96,10 @@ class Demand {
 	}
 
 	/**
-	 * @param array $levelStart
+	 * @param array $levels
 	 */
-	public function setLevels($levelStart) {
-		$this->levels = $levelStart;
+	public function setLevels($levels) {
+		$this->levels = $levels;
 	}
 
 	/**

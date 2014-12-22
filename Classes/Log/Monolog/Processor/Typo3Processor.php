@@ -23,7 +23,7 @@ class Typo3Processor {
 
 		$record['extra']['process_id'] = \TYPO3\CMS\Core\Core\Bootstrap::getInstance()->getRequestId();
 		$record['extra']['mode'] = TYPO3_MODE;
-		$record['extra']['ip'] = (string)\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR')	;
+		$record['extra']['ip'] = (string)\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR');
 
 		if (TYPO3_MODE === 'BE') {
 			if (is_object($GLOBALS['BE_USER'])) {

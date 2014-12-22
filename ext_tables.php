@@ -7,8 +7,8 @@ if (TYPO3_MODE === 'BE') {
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 		'GeorgRinger.' . $_EXTKEY,
 		'system',
-		'dl',
-		'',
+		'logging',
+		'top',
 		array(
 			'Log' => 'list,clear',
 		),

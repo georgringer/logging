@@ -13,10 +13,10 @@
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Logging',
 	'description' => '',
-	'category' => 'plugin',
+	'category' => 'backend',
 	'author' => '',
 	'author_email' => '',
-	'state' => 'alpha',
+	'state' => 'beta',
 	'internal' => '',
 	'uploadfolder' => '0',
 	'createDirs' => '',
@@ -24,11 +24,9 @@ $EM_CONF[$_EXTKEY] = array(
 	'version' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '6.2',
+			'typo3' => '7.0.0-7.9.99',
 		),
-		'conflicts' => array(
-		),
-		'suggests' => array(
-		),
+		'conflicts' => array(),
+		'suggests' => array(),
 	),
 );

@@ -18,6 +18,8 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  */
 class LogEntryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
+	const TABLE = 'sys_log2';
+
 	/**
 	 * @var array Default order is by datetime descending
 	 */
@@ -50,9 +52,9 @@ class LogEntryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	 */
 	public function getAllChannels() {
 		$out = array();
-		$rows = $this->getDb()->exec_SELECTgetRows('channel', 'sys_log2', '', 'channel', 'channel ASC');
+		$rows = $this->getDb()->exec_SELECTgetRows('channel', self::TABLE, '', 'channel', 'channel ASC');
 		foreach ($rows as $row) {
-			$out[$row['channel']] = $row['channel'];;
+			$out[$row['channel']] = $row['channel'];
 		}
 		return $out;
 	}
@@ -61,7 +63,7 @@ class LogEntryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 		$out = array('' => '');
 		$tmp = array();
 
-		$rows = $this->getDb()->exec_SELECTgetRows('user_id,mode', 'sys_log2', '(mode="BE" OR mode="FE") AND user_id > 0', 'user_id,mode');
+		$rows = $this->getDb()->exec_SELECTgetRows('user_id,mode', self::TABLE, '(mode="BE" OR mode="FE") AND user_id > 0', 'user_id,mode');
 		foreach ($rows as $row) {
 			$tmp[$row['mode']][] = $row['user_id'];
 		}
@@ -106,13 +108,17 @@ class LogEntryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 		}
 
 		if ($demand->getDateRange()) {
-			$this->setTimeConstraints($constraints, $query, $demand);
+			$dateConstraints = $this->setTimeConstraints($query, $demand);
+			if (!empty($dateConstraints)) {
+				$constraints = array_merge($constraints, $dateConstraints);
+			}
 		}
 
 		return $constraints;
 	}
 
-	protected function setTimeConstraints(&$constraints, QueryInterface $query, Demand $demand) {
+	protected function setTimeConstraints(QueryInterface $query, Demand $demand) {
+		$constraints = array();
 		$startTime = 0;
 		$endTime = $GLOBALS['EXEC_TIME'];
 		switch ($demand->getDateRange()) {
@@ -161,6 +167,8 @@ class LogEntryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 			$endTime = $this->getTime($endTime);
 			$constraints[] = $query->lessThanOrEqual('datetime', $endTime);
 		}
+
+		return $constraints;
 	}
 
 	/**
@@ -175,8 +183,7 @@ class LogEntryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	/**
 	 * @return \TYPO3\CMS\Core\Database\DatabaseConnection
 	 */
-	protected
-	function getDb() {
+	protected function getDb() {
 		return $GLOBALS['TYPO3_DB'];
 	}
 }

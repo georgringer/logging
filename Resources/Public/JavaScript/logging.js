@@ -1,4 +1,7 @@
 jQuery(function () {
+	// apply DatePicker to all date time fields
+	require(['TYPO3/CMS/Backend/DateTimePicker']);
+
 	if (jQuery('#log-daterange').val() == 7) {
 		jQuery('#log-date-start-container').show();
 		jQuery('#log-date-end-container').show();
@@ -17,7 +20,7 @@ jQuery(function () {
 	});
 
 
-	jQuery('.toggle-information .click').click(function() {
+	jQuery('.toggle-information .click').click(function () {
 		jQuery(this).parent().find('.content').toggle();
 	});
 });

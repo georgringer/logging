@@ -18,7 +18,7 @@ use Monolog\Logger;
 
 class DatabaseHandler extends \Monolog\Handler\AbstractProcessingHandler {
 
-	const LOG_TABLE = 'sys_log2';
+	const TABLE = 'sys_log2';
 
 	/**
 	 * {@inheritDoc}
@@ -38,7 +38,7 @@ class DatabaseHandler extends \Monolog\Handler\AbstractProcessingHandler {
 			'level' => $record['formatted']['level'],
 			'level_name' => $record['formatted']['level_name'],
 			'request_id' => $record['formatted']['extra']['process_id'],
-			'context' =>  !empty($record['formatted']['context']) ? json_encode($recordCopy['formatted']['context']) : '',
+			'context' => !empty($record['formatted']['context']) ? json_encode($recordCopy['formatted']['context']) : '',
 			'message' => $record['formatted']['message'],
 			'datetime' => $record['formatted']['datetime'],
 			'extra' => !empty($recordCopy['formatted']['extra']) ? json_encode($recordCopy['formatted']['extra']) : '',
@@ -48,13 +48,14 @@ class DatabaseHandler extends \Monolog\Handler\AbstractProcessingHandler {
 			'record_id' => (string)$record['formatted']['context']['record_id'],
 		);
 
-		if (FALSE === $GLOBALS['TYPO3_DB']->exec_INSERTquery(self::LOG_TABLE, $insert)) {
+		if ($GLOBALS['TYPO3_DB']->exec_INSERTquery(self::TABLE, $insert) === FALSE) {
 			throw new \RuntimeException('Could not write log record to database', 1345036334);
 		}
 	}
 
+
 	/**
-	 * {@inheritDoc}
+	 * @return \Monolog\Formatter\NormalizerFormatter
 	 */
 	protected function getDefaultFormatter() {
 		return new \Monolog\Formatter\NormalizerFormatter();
