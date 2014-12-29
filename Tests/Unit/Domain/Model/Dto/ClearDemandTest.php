@@ -5,7 +5,7 @@ namespace GeorgRinger\Logging\Tests\Unit\Domain\Model\Dto;
 use GeorgRinger\Logging\Domain\Model\Dto\ClearDemand;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
-class DemoTest extends UnitTestCase {
+class ClearDemandTest extends UnitTestCase {
 
 	/** @var ClearDemand */
 	protected $instance;

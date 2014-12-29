@@ -21,10 +21,23 @@ class DatabaseHandler extends AbstractProcessingHandler {
 
 	const TABLE = 'sys_log2';
 
+	/** @var \TYPO3\CMS\Core\Database\DatabaseConnection */
+	protected $databaseConnection = NULL;
+
 	/**
-	 * {@inheritDoc}
+	 * Write the given log entry to the database
+	 *
+	 * @param array $record
+	 * @return void
 	 */
 	protected function write(array $record) {
+		$insert = $this->transformEntry($record);
+		if ($this->getDataBaseConnection()->exec_INSERTquery(self::TABLE, $insert) === FALSE) {
+			throw new \RuntimeException('Could not write log record to database', 1345036334);
+		}
+	}
+
+	protected function transformEntry(array $record) {
 		$recordCopy = $record;
 
 		unset($recordCopy['formatted']['extra']['process_id']);
@@ -49,9 +62,7 @@ class DatabaseHandler extends AbstractProcessingHandler {
 			'record_id' => (string)$record['formatted']['context']['record_id'],
 		);
 
-		if ($this->getDataBase()->exec_INSERTquery(self::TABLE, $insert) === FALSE) {
-			throw new \RuntimeException('Could not write log record to database', 1345036334);
-		}
+		return $insert;
 	}
 
 	/**
@@ -62,10 +73,16 @@ class DatabaseHandler extends AbstractProcessingHandler {
 	}
 
 	/**
+	 * Wrapper method to get the database connection
+	 *
 	 * @return \TYPO3\CMS\Core\Database\DatabaseConnection
 	 */
-	protected function getDataBase() {
-		return $GLOBALS['TYPO3_DB'];
+	protected function getDataBaseConnection() {
+		if (is_null($this->databaseConnection)) {
+			$this->databaseConnection = $GLOBALS['TYPO3_DB'];
+		}
+
+		return $this->databaseConnection;
 	}
 
 }

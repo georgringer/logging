@@ -5,7 +5,7 @@ namespace GeorgRinger\Logging\Tests\Unit\Domain\Model\Dto;
 use GeorgRinger\Logging\Domain\Model\Dto\DemoEntryDemand;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
-class DemoTest extends UnitTestCase {
+class DemoEntryDemandTest extends UnitTestCase {
 
 	/** @var DemoEntryDemand */
 	protected $instance;
