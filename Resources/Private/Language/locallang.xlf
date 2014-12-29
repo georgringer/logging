@@ -28,7 +28,7 @@
 				<source>Clear</source>
 			</trans-unit>
 			<trans-unit id="action.demo">
-				<source>Demo</source>
+				<source>Add a demo log entry</source>
 			</trans-unit>
 			<trans-unit id="dateStart">
 				<source>Date start</source>

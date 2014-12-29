@@ -13,12 +13,13 @@ namespace GeorgRinger\Logging\Domain\Model;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 
 /**
  * Log
  */
-class LogEntry extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+class LogEntry extends AbstractEntity {
 
 	/** @var string */
 	protected $channel;

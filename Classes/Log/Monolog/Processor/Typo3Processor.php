@@ -14,6 +14,9 @@
 
 namespace GeorgRinger\Logging\Log\Monolog\Processor;
 
+use TYPO3\CMS\Core\Core\Bootstrap;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 class Typo3Processor {
 	/**
 	 * @param  array $record
@@ -21,9 +24,9 @@ class Typo3Processor {
 	 */
 	public function __invoke(array $record) {
 
-		$record['extra']['process_id'] = \TYPO3\CMS\Core\Core\Bootstrap::getInstance()->getRequestId();
+		$record['extra']['process_id'] = Bootstrap::getInstance()->getRequestId();
 		$record['extra']['mode'] = TYPO3_MODE;
-		$record['extra']['ip'] = (string)\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('REMOTE_ADDR');
+		$record['extra']['ip'] = (string)GeneralUtility::getIndpEnv('REMOTE_ADDR');
 
 		if (TYPO3_MODE === 'BE') {
 			if (is_object($GLOBALS['BE_USER'])) {

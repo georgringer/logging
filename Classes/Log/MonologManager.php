@@ -13,12 +13,16 @@ namespace GeorgRinger\Logging\Log;
 	 *
 	 * The TYPO3 project - inspiring people to share!
 	 */
+use Monolog\Logger;
+use TYPO3\CMS\Core\Log\LogManagerInterface;
+use TYPO3\CMS\Core\SingletonInterface;
+
 /**
  * Global LogManager that keeps track of global logging information.
  *
  * Inspired by java.util.logging
  */
-class MonologManager implements \TYPO3\CMS\Core\SingletonInterface, \TYPO3\CMS\Core\Log\LogManagerInterface {
+class MonologManager implements SingletonInterface, LogManagerInterface {
 
 	/**
 	 * @var string
@@ -46,10 +50,10 @@ class MonologManager implements \TYPO3\CMS\Core\SingletonInterface, \TYPO3\CMS\C
 
 	/**
 	 * @param string $name
-	 * @return \Monolog\Logger
+	 * @return Logger
 	 */
 	public function getLogger($name = '') {
-		/** @var $logger \Monolog\Logger */
+		/** @var $logger Logger */
 		$logger = NULL;
 
 		// Transform namespaces and underscore class names to the dot-name style
@@ -65,7 +69,7 @@ class MonologManager implements \TYPO3\CMS\Core\SingletonInterface, \TYPO3\CMS\C
 			}
 			// Lazy instantiation
 			/** @var $logger Logger */
-			$logger = new \Monolog\Logger($readableName);
+			$logger = new Logger($readableName);
 			$this->setHandlers($logger, $name);
 			$this->setProcessorsForLogger($logger, $name);
 			$this->loggers[$name] = $logger;
@@ -73,7 +77,11 @@ class MonologManager implements \TYPO3\CMS\Core\SingletonInterface, \TYPO3\CMS\C
 		return $logger;
 	}
 
-	protected function setHandlers(\Monolog\Logger $logger, $name) {
+	/**
+	 * @param Logger $logger
+	 * @param $name
+	 */
+	protected function setHandlers(Logger $logger, $name) {
 		$configuration = $this->getConfigurationForLogger(self::CONFIGURATION_TYPE_HANDLER, $name);
 
 		if (isset($configuration['handlers'] )) {
@@ -92,7 +100,11 @@ class MonologManager implements \TYPO3\CMS\Core\SingletonInterface, \TYPO3\CMS\C
 		}
 	}
 
-	protected function setProcessorsForLogger(\Monolog\Logger $logger, $name) {
+	/**
+	 * @param Logger $logger
+	 * @param $name
+	 */
+	protected function setProcessorsForLogger(Logger $logger, $name) {
 		$configuration = $this->getConfigurationForLogger(self::CONFIGURATION_TYPE_PROCESSOR, $name);
 
 		foreach ($configuration as $processorClassName => $options) {

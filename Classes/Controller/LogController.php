@@ -13,13 +13,16 @@ namespace GeorgRinger\Logging\Controller;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use GeorgRinger\Logging\Log\MonologManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * LogController
  */
-class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+class LogController extends ActionController {
 
 	/**
 	 * @param \GeorgRinger\Logging\Domain\Model\Dto\Demand $demand
@@ -52,13 +55,16 @@ class LogController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 		if (!is_null($demo)) {
 			/** @var \Monolog\Logger $logger */
-			$logger = GeneralUtility::makeInstance(\GeorgRinger\Logging\Log\MonologManager::class)->getLogger(__CLASS__);
+			$logger = GeneralUtility::makeInstance(MonologManager::class)->getLogger(__CLASS__);
 			$logger->addRecord($demo->getLevel(), $demo->getMessage());
 			$this->view->assign('added', TRUE);
 		}
 	}
 
-	protected function initializeView(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view) {
+	/**
+	 * @param ViewInterface $view
+	 */
+	protected function initializeView(ViewInterface $view) {
 		$view->assignMultiple(array(
 			'levels' => array(
 				100 => $this->translate('level.100'),

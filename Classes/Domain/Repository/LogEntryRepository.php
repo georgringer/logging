@@ -3,6 +3,7 @@ namespace GeorgRinger\Logging\Domain\Repository;
 
 use GeorgRinger\Logging\Domain\Model\Dto\Demand;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -16,7 +17,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  *
  * The TYPO3 project - inspiring people to share!
  */
-class LogEntryRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class LogEntryRepository extends Repository {
 
 	const TABLE = 'sys_log2';
 

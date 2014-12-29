@@ -14,9 +14,10 @@
 
 namespace GeorgRinger\Logging\Log\Monolog\Handler;
 
-use Monolog\Logger;
+use Monolog\Formatter\NormalizerFormatter;
+use Monolog\Handler\AbstractProcessingHandler;
 
-class DatabaseHandler extends \Monolog\Handler\AbstractProcessingHandler {
+class DatabaseHandler extends AbstractProcessingHandler {
 
 	const TABLE = 'sys_log2';
 
@@ -48,16 +49,23 @@ class DatabaseHandler extends \Monolog\Handler\AbstractProcessingHandler {
 			'record_id' => (string)$record['formatted']['context']['record_id'],
 		);
 
-		if ($GLOBALS['TYPO3_DB']->exec_INSERTquery(self::TABLE, $insert) === FALSE) {
+		if ($this->getDataBase()->exec_INSERTquery(self::TABLE, $insert) === FALSE) {
 			throw new \RuntimeException('Could not write log record to database', 1345036334);
 		}
 	}
 
-
 	/**
-	 * @return \Monolog\Formatter\NormalizerFormatter
+	 * @return NormalizerFormatter
 	 */
 	protected function getDefaultFormatter() {
-		return new \Monolog\Formatter\NormalizerFormatter();
+		return new NormalizerFormatter();
 	}
+
+	/**
+	 * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+	 */
+	protected function getDataBase() {
+		return $GLOBALS['TYPO3_DB'];
+	}
+
 }

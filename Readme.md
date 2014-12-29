@@ -33,7 +33,7 @@ Note: this config works with PHP 5.5 only, if using PHP 5.4, replace ``::class``
 
 ## How to log
 
-Logging is then very simple and similiar to the used logging framework: ::
+Logging is then very simple and similar to the used logging framework: ::
 
 	/** @var \Monolog\Logger $logger */
 	$logger = GeneralUtility::makeInstance(\GeorgRinger\Logging\Log\MonologManager::class)->getLogger(__CLASS__);

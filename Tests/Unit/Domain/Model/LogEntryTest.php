@@ -3,8 +3,9 @@
 namespace GeorgRinger\Logging\Tests\Unit\Domain\Model;
 
 use GeorgRinger\Logging\Domain\Model\LogEntry;
+use TYPO3\CMS\Core\Tests\UnitTestCase;
 
-class LogEntryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class LogEntryTest extends UnitTestCase {
 
 	/** @var LogEntry */
 	protected $instance;

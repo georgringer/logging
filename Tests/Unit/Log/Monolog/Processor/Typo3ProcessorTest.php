@@ -2,13 +2,17 @@
 
 namespace GeorgRinger\Logging\Tests\Unit\Log\Monolog\Processor;
 
-class Typo3ProcessorTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+use GeorgRinger\Logging\Log\Monolog\Processor\Typo3Processor;
+use TYPO3\CMS\Core\Core\Bootstrap;
+use TYPO3\CMS\Core\Tests\UnitTestCase;
 
-	/** @var \GeorgRinger\Logging\Log\Monolog\Processor\Typo3Processor */
+class Typo3ProcessorTest extends UnitTestCase {
+
+	/** @var Typo3Processor */
 	protected $instance;
 
 	public function setup() {
-		$this->instance = new \GeorgRinger\Logging\Log\Monolog\Processor\Typo3Processor();
+		$this->instance = new Typo3Processor();
 	}
 
 	/**
@@ -19,7 +23,7 @@ class Typo3ProcessorTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			'fo' => 'bar'
 		];
 
-		$processId = \TYPO3\CMS\Core\Core\Bootstrap::getInstance()->getRequestId();
+		$processId = Bootstrap::getInstance()->getRequestId();
 		$expected = [
 			'fo' => 'bar',
 			'extra' => [
