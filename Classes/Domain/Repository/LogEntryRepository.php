@@ -92,7 +92,7 @@ class LogEntryRepository extends Repository {
 		$processed = FALSE;
 
 		if ($clear->getAll()) {
-//			$this->truncateLogTable();
+			$this->truncateLogTable();
 			$processed = TRUE;
 		}
 

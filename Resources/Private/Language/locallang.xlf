@@ -133,7 +133,6 @@
 			<trans-unit id="demoEntryAdded">
 				<source>The demo entry has been successfully added!</source>
 			</trans-unit>
-
 			<trans-unit id="clearAll">
 				<source>Remove all entries of the log table</source>
 			</trans-unit>

@@ -106,7 +106,6 @@ class LogController extends ActionController {
 		$pageRenderer = $documentTemplate->getPageRenderer();
 		$dateFormat = ($GLOBALS['TYPO3_CONF_VARS']['SYS']['USdateFormat'] ? array('MM-DD-YYYY', 'HH:mm MM-DD-YYYY') : array('DD-MM-YYYY', 'HH:mm DD-MM-YYYY'));
 		$pageRenderer->addInlineSetting('DateTimePicker', 'DateFormat', $dateFormat);
-
 	}
 
 	/**
