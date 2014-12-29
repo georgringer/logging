@@ -2,7 +2,7 @@
 namespace GeorgRinger\Logging\Domain\Repository;
 
 use GeorgRinger\Logging\Domain\Model\Dto\ClearDemand;
-use GeorgRinger\Logging\Domain\Model\Dto\Demand;
+use GeorgRinger\Logging\Domain\Model\Dto\ListDemand;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
@@ -33,10 +33,10 @@ class LogEntryRepository extends Repository {
 	);
 
 	/**
-	 * @param Demand $demand
+	 * @param ListDemand $demand
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findByDemand(Demand $demand = NULL) {
+	public function findByDemand(ListDemand $demand = NULL) {
 		$query = $this->createQuery();
 		$query->getQuerySettings()->setRespectStoragePage(FALSE);
 
@@ -101,10 +101,10 @@ class LogEntryRepository extends Repository {
 
 	/**
 	 * @param QueryInterface $query
-	 * @param Demand $demand
+	 * @param ListDemand $demand
 	 * @return array
 	 */
-	protected function createConstraintsFromDemand(QueryInterface $query, Demand $demand) {
+	protected function createConstraintsFromDemand(QueryInterface $query, ListDemand $demand) {
 		$constraints = array();
 
 		if ($demand->getLevels()) {
@@ -137,7 +137,7 @@ class LogEntryRepository extends Repository {
 		return $constraints;
 	}
 
-	protected function setTimeConstraints(QueryInterface $query, Demand $demand) {
+	protected function setTimeConstraints(QueryInterface $query, ListDemand $demand) {
 		$constraints = array();
 		$startTime = 0;
 		$endTime = $GLOBALS['EXEC_TIME'];

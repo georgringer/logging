@@ -18,7 +18,7 @@ namespace GeorgRinger\Logging\Domain\Model\Dto;
 /**
  * Class Demo
  */
-class Demo {
+class DemoEntryDemand {
 
 	/** @var int */
 	protected $level;

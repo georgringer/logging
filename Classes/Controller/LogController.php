@@ -25,10 +25,10 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class LogController extends ActionController {
 
 	/**
-	 * @param \GeorgRinger\Logging\Domain\Model\Dto\Demand $demand
+	 * @param \GeorgRinger\Logging\Domain\Model\Dto\ListDemand $demand
 	 * @return void
 	 */
-	public function listAction(\GeorgRinger\Logging\Domain\Model\Dto\Demand $demand = NULL) {
+	public function listAction(\GeorgRinger\Logging\Domain\Model\Dto\ListDemand $demand = NULL) {
 		$this->view->assignMultiple(array(
 			'demand' => $demand,
 			'logs' => $this->logEntryRepository->findByDemand($demand),
@@ -54,9 +54,9 @@ class LogController extends ActionController {
 	}
 
 	/**
-	 * @param \GeorgRinger\Logging\Domain\Model\Dto\Demo $demo
+	 * @param \GeorgRinger\Logging\Domain\Model\Dto\DemoEntryDemand $demo
 	 */
-	public function demoAction(\GeorgRinger\Logging\Domain\Model\Dto\Demo $demo = NULL) {
+	public function demoAction(\GeorgRinger\Logging\Domain\Model\Dto\DemoEntryDemand $demo = NULL) {
 		$this->view->assign('demo', $demo);
 
 		if (!is_null($demo)) {

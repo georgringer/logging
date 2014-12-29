@@ -2,7 +2,7 @@
 
 namespace GeorgRinger\Logging\Tests\Unit\Domain\Repository;
 
-use GeorgRinger\Logging\Domain\Model\Dto\Demand;
+use GeorgRinger\Logging\Domain\Model\Dto\ListDemand;
 use GeorgRinger\Logging\Domain\Repository\LogEntryRepository;
 use TYPO3\CMS\Core\Tests\AccessibleObjectInterface;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
@@ -13,12 +13,12 @@ class LogEntryRepositoryTest extends UnitTestCase {
 	/** @var AccessibleObjectInterface */
 	protected $repository;
 
-	/** @var Demand */
+	/** @var ListDemand */
 	protected $demand;
 
 	public function setUp() {
 		$this->repository = $this->getAccessibleMock(LogEntryRepository::class, array('dummy'), array(), '', FALSE);
-		$this->demand = new Demand();
+		$this->demand = new ListDemand();
 	}
 
 	/**

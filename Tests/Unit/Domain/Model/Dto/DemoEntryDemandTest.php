@@ -2,16 +2,16 @@
 
 namespace GeorgRinger\Logging\Tests\Unit\Domain\Model\Dto;
 
-use GeorgRinger\Logging\Domain\Model\Dto\Demo;
+use GeorgRinger\Logging\Domain\Model\Dto\DemoEntryDemand;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 class DemoTest extends UnitTestCase {
 
-	/** @var Demo */
+	/** @var DemoEntryDemand */
 	protected $instance;
 
 	public function setup() {
-		$this->instance = new Demo();
+		$this->instance = new DemoEntryDemand();
 	}
 
 	/**

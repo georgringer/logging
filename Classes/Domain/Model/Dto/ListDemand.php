@@ -18,7 +18,7 @@ namespace GeorgRinger\Logging\Domain\Model\Dto;
 /**
  * Class Demand
  */
-class Demand {
+class ListDemand {
 
 	/**
 	 * @var string
