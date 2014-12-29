@@ -1,18 +1,18 @@
 <?php
 namespace GeorgRinger\Logging\Log;
 
-	/**
-	 * This file is part of the TYPO3 CMS project.
-	 *
-	 * It is free software; you can redistribute it and/or modify it under
-	 * the terms of the GNU General Public License, either version 2
-	 * of the License, or any later version.
-	 *
-	 * For the full copyright and license information, please read the
-	 * LICENSE.txt file that was distributed with this source code.
-	 *
-	 * The TYPO3 project - inspiring people to share!
-	 */
+/**
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
 use Monolog\Logger;
 use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -24,14 +24,9 @@ use TYPO3\CMS\Core\SingletonInterface;
  */
 class MonologManager implements SingletonInterface, LogManagerInterface {
 
-	/**
-	 * @var string
-	 */
 	const CONFIGURATION_TYPE_HANDLER = 'handler';
-	/**
-	 * @var string
-	 */
 	const CONFIGURATION_TYPE_PROCESSOR = 'processor';
+
 	/**
 	 * Loggers to retrieve them for repeated use.
 	 *
@@ -84,7 +79,7 @@ class MonologManager implements SingletonInterface, LogManagerInterface {
 	protected function setHandlers(Logger $logger, $name) {
 		$configuration = $this->getConfigurationForLogger(self::CONFIGURATION_TYPE_HANDLER, $name);
 
-		if (isset($configuration['handlers'] )) {
+		if (isset($configuration['handlers'])) {
 			foreach ($configuration['handlers'] as $handlerClassName => $options) {
 				try {
 					if (!empty($options)) {
