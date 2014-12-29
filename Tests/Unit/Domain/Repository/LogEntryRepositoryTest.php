@@ -108,4 +108,29 @@ class LogEntryRepositoryTest extends UnitTestCase {
 
 		$this->assertEquals(2, count($constraints));
 	}
+
+	/**
+	 * @test
+	 */
+	public function clearDemandCallsTruncate() {
+		$repository = $this->getAccessibleMock(LogEntryRepository::class, array('truncateLogTable'), array(), '', FALSE);
+		$repository->expects($this->once())->method('truncateLogTable');
+
+		$clearDemand = new \GeorgRinger\Logging\Domain\Model\Dto\ClearDemand();
+		$clearDemand->setAll(TRUE);
+		$repository->_call('clearByDemand', $clearDemand);
+	}
+
+	/**
+	 * @test
+	 */
+	public function truncateTableCallIsProcessed() {
+		$mockedDatabaseConnection = $this->getAccessibleMock(\TYPO3\CMS\Core\Database\DatabaseConnection::class, array('exec_TRUNCATEquery'), array(), '', FALSE);
+		$repository = $this->getAccessibleMock(LogEntryRepository::class, array('dummy'), array(), '', FALSE);
+
+		$repository->_set('databaseConnection', $mockedDatabaseConnection);
+
+		$mockedDatabaseConnection->expects($this->once())->method('exec_TRUNCATEquery')->with(LogEntryRepository::TABLE);
+		$repository->_call('truncateLogTable');
+	}
 }

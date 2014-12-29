@@ -9,9 +9,24 @@
 		<f:translate key="clear.lead" />
 	</p>
 
-	<div class="alert alert-danger">
-		<strong>Not yet implemented!</strong>
-	</div>
+	<f:form name="clear" object="{clear}" action="clear">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="log-clearAll">
+						<f:translate key="clearAll" />
+					</label>
+					<f:form.checkbox property="all" class="checkbox" id="log-clearAll" value="1" />
+				</div>
+			</div>
+		</div>
 
+		<f:form.submit class="button" value="{f:translate(key:'submit')}" />
+	</f:form>
 
+	<f:if condition="{processed}">
+		<div class="alert alert-success">
+			<f:translate key="entriesCleared" />
+		</div>
+	</f:if>
 </f:section>

@@ -1,6 +1,7 @@
 <?php
 namespace GeorgRinger\Logging\Domain\Repository;
 
+use GeorgRinger\Logging\Domain\Model\Dto\ClearDemand;
 use GeorgRinger\Logging\Domain\Model\Dto\Demand;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -20,6 +21,9 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 class LogEntryRepository extends Repository {
 
 	const TABLE = 'sys_log2';
+
+	/** @var \TYPO3\CMS\Core\Database\DatabaseConnection */
+	protected $databaseConnection = NULL;
 
 	/**
 	 * @var array Default order is by datetime descending
@@ -53,7 +57,7 @@ class LogEntryRepository extends Repository {
 	 */
 	public function getAllChannels() {
 		$out = array();
-		$rows = $this->getDb()->exec_SELECTgetRows('channel', self::TABLE, '', 'channel', 'channel ASC');
+		$rows = $this->getDatabaseConnection()->exec_SELECTgetRows('channel', self::TABLE, '', 'channel', 'channel ASC');
 		foreach ($rows as $row) {
 			$out[$row['channel']] = $row['channel'];
 		}
@@ -64,20 +68,35 @@ class LogEntryRepository extends Repository {
 		$out = array('' => '');
 		$tmp = array();
 
-		$rows = $this->getDb()->exec_SELECTgetRows('user_id,mode', self::TABLE, '(mode="BE" OR mode="FE") AND user_id > 0', 'user_id,mode');
+		$rows = $this->getDatabaseConnection()->exec_SELECTgetRows('user_id,mode', self::TABLE, '(mode="BE" OR mode="FE") AND user_id > 0', 'user_id,mode');
 		foreach ($rows as $row) {
 			$tmp[$row['mode']][] = $row['user_id'];
 		}
 
 		foreach ($tmp as $mode => $users) {
 			$table = $mode === 'BE' ? 'be_users' : 'fe_users';
-			$rows = $this->getDb()->exec_SELECTgetRows('*', $table, 'uid in (' . implode(',', $users) . ')');
+			$rows = $this->getDatabaseConnection()->exec_SELECTgetRows('*', $table, 'uid in (' . implode(',', $users) . ')');
 			foreach ($rows as $row) {
 				$out[$mode . '_' . $row['uid']] = sprintf('%s: %s (%s)', $mode, $row['username'], $row['uid']);
 			}
 		}
 
 		return $out;
+	}
+
+	/**
+	 * @param ClearDemand $clear
+	 * @return boolean returns TRUE if any records should have been removed
+	 */
+	public function clearByDemand(ClearDemand $clear) {
+		$processed = FALSE;
+
+		if ($clear->getAll()) {
+//			$this->truncateLogTable();
+			$processed = TRUE;
+		}
+
+		return $processed;
 	}
 
 	/**
@@ -173,6 +192,15 @@ class LogEntryRepository extends Repository {
 	}
 
 	/**
+	 * Truncate the log table
+	 *
+	 * @return void
+	 */
+	protected function truncateLogTable() {
+		$this->getDatabaseConnection()->exec_TRUNCATEquery(self::TABLE);
+	}
+
+	/**
 	 * @param int $time
 	 * @return string
 	 */
@@ -184,7 +212,10 @@ class LogEntryRepository extends Repository {
 	/**
 	 * @return \TYPO3\CMS\Core\Database\DatabaseConnection
 	 */
-	protected function getDb() {
-		return $GLOBALS['TYPO3_DB'];
+	protected function getDatabaseConnection() {
+		if (is_null($this->databaseConnection)) {
+			$this->databaseConnection = $GLOBALS['TYPO3_DB'];
+		}
+		return $this->databaseConnection;
 	}
 }

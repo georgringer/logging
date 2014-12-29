@@ -41,10 +41,16 @@ class LogController extends ActionController {
 	/**
 	 * Clear the logs
 	 *
+	 * @param \GeorgRinger\Logging\Domain\Model\Dto\ClearDemand $clear
 	 * @return void
 	 */
-	public function clearAction() {
+	public function clearAction(\GeorgRinger\Logging\Domain\Model\Dto\ClearDemand $clear = NULL) {
+		$this->view->assign('clear', $clear);
 
+		if (!is_null($clear)) {
+			$processed = $this->logEntryRepository->clearByDemand($clear);
+			$this->view->assign('processed', $processed);
+		}
 	}
 
 	/**
