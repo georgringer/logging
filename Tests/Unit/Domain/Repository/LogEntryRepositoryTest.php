@@ -26,7 +26,7 @@ class LogEntryRepositoryTest extends UnitTestCase {
 	 */
 	public function correctTimeIsReturned() {
 		$repository = $this->getAccessibleMock(LogEntryRepository::class, array('dummy'), array(), '', FALSE);
-		$this->assertEquals('2014-12-22 19:25:29', $repository->_call('getTime', 1419272729));
+		$this->assertEquals('2014-12-22 19:25:29 CET', $repository->_call('getTime', 1419272729));
 	}
 
 	/**
