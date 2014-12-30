@@ -7,30 +7,55 @@
 TYPO3 Extension "logging"
 =========================
 
-This extensions brings the awesome project "monolog" into the world of TYPO3 CMS.
+About
+-----
+
+This extensions brings the awesome project  `monolog <https://github.com/Seldaek/monolog>`_ into the world of TYPO3 CMS.
 
 The most important features are:
 
 * Full support of monolog, including all handlers and processors
-* A custom handler to write into the database of TYPO3.
+* A custom handler to write into the database of TYPO3
 * A backend module to list & filter the entries
 
 Screenshots
------------
+^^^^^^^^^^^
 
-TODO: add screenshots
+.. figure:: Documentation/assets/module-list.png
+:alt: Screenshot of the backend module
+
+.. figure:: Documentation/assets/module-testentry.png
+:alt: Create a test entry
 
 Requirements
-------------
+^^^^^^^^^^^^
 
 * TYPO3.CMS 7.x (PHP 5.5!)
-* Your project set up with composer and ```monolog/monolog``` as requirement.
+* Your project set up with composer and ```monolog/monolog``` as requirement. ::
+
+	{
+	  "repositories": [
+		{
+		  "type": "composer",
+		  "url": "http://composer.typo3.org/"
+		},
+		{
+		  "url": "https://github.com/georgringer/logging.git",
+		  "type": "git"
+		}
+	  ],
+	  "require": {
+		"typo3/cms": "7.0.0",
+		"georgringer/logging": "dev-master",
+		"monolog/monolog": "*"
+	  }
+	}
 
 .. hint::
 It might be possible that a later release will bring support for 6.2 LTS.
 
 Installation
-------------
+^^^^^^^^^^^^
 
 Install the extension as always.  Currently (state of 7.1), packages installed via composer are **not loaded** and must
 be required by yourself. You can do that by using the following line in your ```typo3conf/AdditionalConfiguration.php``` file: ::
