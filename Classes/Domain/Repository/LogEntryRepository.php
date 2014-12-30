@@ -205,7 +205,7 @@ class LogEntryRepository extends Repository {
 	 * @return string
 	 */
 	protected function getTime($time) {
-		$time = strftime('%Y-%m-%d %H:%M:%S %Z', $time);
+		$time = strftime('%Y-%m-%d %H:%M:%S', $time);
 		return $time;
 	}
 
