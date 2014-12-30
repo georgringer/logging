@@ -18,6 +18,9 @@ The most important features are:
 * A custom handler to write into the database of TYPO3
 * A backend module to list & filter the entries
 
+.. image:: https://travis-ci.org/georgringer/logging.svg
+:alt: Travis build status
+
 Screenshots
 ^^^^^^^^^^^
 
