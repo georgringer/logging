@@ -211,18 +211,51 @@ Logging is very simple and similar to the used logging framework: ::
 Available methods for logging
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This methods are available for logging:
+The following methods are available for logging. The *context* is an optional array with additional information.
 
-	* Debug: ``$logger->debug($message, $context);`` & ``$logger->addDebug($message, $context);``
-	* Info: ``$logger->info($message, $context);`` & ``$logger->addInfo($message, $context);``
-	* Notice: ``$logger->notice($message, $context);`` & ``$logger->addNotice($message, $context);``
-	* Warning: ``$logger->warning($message, $context);`` & ``$logger->warn($message, $context);`` & ``$logger->addWarning($message, $context);``
-	* Error: ``$logger->error($message, $context);`` & ``$logger->err($message, $context);`` & ``$logger->addError($message, $context);``
-	* Critical: ``$logger->critical($message, $context);`` & ``$logger->crit($message, $context);`` & ``$logger->addCritical($message, $context);``
-	* Alert: ``$logger->alert($message, $context);`` & ``$logger->addAlert($message, $context);``
-	* Emergency: ``$logger->emergency($message, $context);`` & ``$logger->emerg($message, $context);`` &``$logger->addEmergency($message, $context);``
+**Debug** ::
 
-The *context* is an optional array with additional information.
+	$logger->addDebug($message, $context);
+	$logger->debug($message, $context);
+
+**Info** ::
+
+	$logger->addInfo($message, $context);
+	$logger->info($message, $context);
+
+**Notice** ::
+
+	$logger->addNotice($message, $context);
+	$logger->notice($message, $context);
+
+**Warning** ::
+
+	$logger->addWarning($message, $context);
+	$logger->warn($message, $context);
+	$logger->warning($message, $context);
+
+**Error** ::
+
+	$logger->addError($message, $context);
+	$logger->err($message, $context);
+	$logger->error($message, $context);
+
+**Critical** ::
+
+	$logger->addCritical($message, $context);
+	$logger->crit($message, $context);
+	$logger->critical($message, $context);
+
+**Alert** ::
+
+	$logger->addAlert($message, $context);
+	$logger->alert($message, $context);
+
+**Emergency** ::
+
+	$logger->addEmergency($message, $context);
+	$logger->emerg($message, $context);
+	$logger->emergency($message, $context);
 
 Contribute!
 -----------
