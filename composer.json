@@ -7,7 +7,6 @@
     "logging": "*"
   },
   "require": {
-    "monolog/monolog": "*",
-    "typo3/cms": "7.*"
+    "monolog/monolog": "*"
   }
 }
