@@ -68,6 +68,16 @@ class LogController extends ActionController {
 	}
 
 	/**
+	 * Display the configuration
+	 *
+	 * @return void
+	 */
+	public function configurationAction() {
+		$configuration = var_export($GLOBALS['TYPO3_CONF_VARS']['MONOLOG'], TRUE);
+		$this->view->assign('configuration', $configuration);
+	}
+
+	/**
 	 * @param ViewInterface $view
 	 */
 	protected function initializeView(ViewInterface $view) {

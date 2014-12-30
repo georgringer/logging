@@ -21,6 +21,12 @@
 			<trans-unit id="demo.lead">
 				<source>Add a demo entry to test the extension.</source>
 			</trans-unit>
+			<trans-unit id="configuration.header">
+				<source>Logging configuration</source>
+			</trans-unit>
+			<trans-unit id="configuration.lead">
+				<source>This is the current used configuration.</source>
+			</trans-unit>
 			<trans-unit id="action.list">
 				<source>List</source>
 			</trans-unit>
@@ -29,6 +35,9 @@
 			</trans-unit>
 			<trans-unit id="action.demo">
 				<source>Add a demo log entry</source>
+			</trans-unit>
+			<trans-unit id="action.configuration">
+				<source>Current configuration</source>
 			</trans-unit>
 			<trans-unit id="dateStart">
 				<source>Date start</source>

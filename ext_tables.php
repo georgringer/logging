@@ -10,7 +10,7 @@ if (TYPO3_MODE === 'BE') {
 		'logging',
 		'top',
 		array(
-			'Log' => 'list,clear,demo',
+			'Log' => 'list,clear,demo,configuration',
 		),
 		array(
 			'access' => 'user,group',
