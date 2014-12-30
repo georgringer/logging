@@ -18,6 +18,7 @@ before_script:
   - git clone --single-branch --branch $TYPO3_BRANCH --depth 1 https://github.com/TYPO3/TYPO3.CMS.git typo3_core
   - mv typo3_core/* .
   - composer install
+  - composer require monolog/monolog
   - mkdir -p typo3conf/ext
   - mv logging typo3conf/ext/
 
