@@ -1,5 +1,5 @@
 {
-  "name": "typo3-ter/logging",
+  "name": "georgringer/logging",
   "version": "0.0.1",
   "description": "Logging for TYPO3 CMS",
   "type": "typo3-cms-extension",
