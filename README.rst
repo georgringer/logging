@@ -19,7 +19,6 @@ The most important features are:
 * A backend module to list & filter the entries
 
 .. image:: https://travis-ci.org/georgringer/logging.svg
-:alt: Travis build status
 
 Screenshots
 ^^^^^^^^^^^
