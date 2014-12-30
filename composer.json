@@ -1,0 +1,12 @@
+{
+  "name": "typo3-ter/logging",
+  "version": "0.0.1",
+  "description": "Logging for TYPO3 CMS",
+  "type": "typo3-cms-extension",
+  "replace": {
+    "logging": "*"
+  },
+  "require": {
+    "typo3/cms": "7.*"
+  }
+}
