@@ -7,6 +7,5 @@
     "logging": "*"
   },
   "require": {
-    "monolog/monolog": "*"
   }
 }
