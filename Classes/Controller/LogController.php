@@ -13,7 +13,6 @@ namespace GeorgRinger\Logging\Controller;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use GeorgRinger\Logging\Log\MonologManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
@@ -61,7 +60,7 @@ class LogController extends ActionController {
 
 		if (!is_null($demo)) {
 			/** @var \Monolog\Logger $logger */
-			$logger = GeneralUtility::makeInstance(MonologManager::class)->getLogger(__CLASS__);
+			$logger = GeneralUtility::makeInstance('GeorgRinger\\Logging\\Log\\MonologManager')->getLogger(__CLASS__);
 			$logger->addRecord($demo->getLevel(), $demo->getMessage());
 			$this->view->assign('added', TRUE);
 		}
@@ -79,6 +78,7 @@ class LogController extends ActionController {
 
 	/**
 	 * @param ViewInterface $view
+	 * @return void
 	 */
 	protected function initializeView(ViewInterface $view) {
 		$view->assignMultiple(array(
@@ -134,6 +134,10 @@ class LogController extends ActionController {
 	 */
 	protected $logEntryRepository;
 
+	/**
+	 * @param \GeorgRinger\Logging\Domain\Repository\LogEntryRepository $logEntryRepository
+	 * @return void
+	 */
 	public function injectLogEntryRepository(\GeorgRinger\Logging\Domain\Repository\LogEntryRepository $logEntryRepository) {
 		$this->logEntryRepository = $logEntryRepository;
 	}
