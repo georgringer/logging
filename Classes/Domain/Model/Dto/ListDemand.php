@@ -56,7 +56,7 @@ class ListDemand {
 	protected $user;
 
 	/**
-	 * @var int
+	 * @var string
 	 */
 	protected $dateRange;
 
@@ -159,14 +159,14 @@ class ListDemand {
 	}
 
 	/**
-	 * @return int
+	 * @return string
 	 */
 	public function getDateRange() {
-		return (int)$this->dateRange;
+		return $this->dateRange;
 	}
 
 	/**
-	 * @param int $dateRange
+	 * @param string $dateRange
 	 */
 	public function setDateRange($dateRange) {
 		$this->dateRange = $dateRange;

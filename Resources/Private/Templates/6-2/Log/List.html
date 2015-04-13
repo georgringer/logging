@@ -1,0 +1,173 @@
+<f:layout name="Default" />
+
+<f:section name="content">
+	<h1>
+		<f:translate key="list.header" />
+	</h1>
+
+	<p class="lead">
+		<f:translate key="list.lead" />
+	</p>
+
+	<f:form name="demand" object="{demand}">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="form-gromaup">
+					<label for="log-daterange">
+						<f:translate key="dateRange" />
+					</label>
+					<f:form.select property="dateRange" options="{dateRanges}" id="log-daterange" class="form-control" />
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="form-group" id="log-date-start-container">
+					<label for="tceforms-datetimefield-log_start">
+						<f:translate key="dateStart" />
+					</label>
+
+					<div class="t3js-datetimepicker input-group">
+						<f:form.textfield property="dateStart" id="tceforms-datetimefield-log_start" class="form-control" />
+						<span class="input-group-addon datepickerbutton">
+							<span style="cursor:pointer;" class="t3-icon fa fa-calendar"> </span> </span>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="form-group" id="log-date-end-container">
+					<label for="tceforms-datetimefield-log_end">
+						<f:translate key="dateEnd" />
+					</label>
+
+					<div class="t3js-datetimepicker input-group">
+						<f:form.textfield property="dateEnd" id="tceforms-datetimefield-log_end" class="form-control" />
+						<span class="input-group-addon datepickerbutton">
+							<span style="cursor:pointer;" class="t3-icon fa fa-calendar"> </span> </span>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label for="log-levels">
+						<f:translate key="level" />
+					</label>
+					<f:form.select size="8" multiple="1" property="levels" options="{levels}" id="log-levels" class="form-control" />
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="form-group">
+					<label for="log-logmodes">
+						<f:translate key="mode" />
+					</label>
+					<f:form.select size="3" multiple="1" property="modes" options="{be:'BE', fe:'FE', cli:'CLI'}" id="log-logmodes" style="height:65px" class="form-control" />
+				</div>
+
+				<div class="form-group">
+					<label for="log-request-id">
+						<f:translate key="requestId" />
+					</label>
+					<f:form.textfield property="requestId" id="log-request-id" class="form-control" />
+				</div>
+			</div>
+
+			<div class="col-sm-2">
+				<div class="form-group">
+					<label for="log-channels">
+						<f:translate key="channel" />
+					</label>
+					<f:form.select size="3" multiple="1" property="channels" options="{channels}" id="log-channels" class="form-control" style="height:65px" />
+				</div>
+				<div class="form-group">
+					<label for="log-log-user">
+						<f:translate key="user" />
+					</label>
+					<f:form.select property="user" options="{users}" id="log-log-user" class="form-control" />
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+
+		<f:form.submit class="button" value="{f:translate(key:'submit')}" />
+	</f:form>
+
+	<f:if condition="{logs}">
+		<f:then>
+			<table class="t3-table">
+				<tr>
+					<th>{f:translate(key:'date')}</th>
+					<th>{f:translate(key:'mode')}</th>
+					<th>{f:translate(key:'channel')}</th>
+					<th>{f:translate(key:'level')}</th>
+					<th>{f:translate(key:'message')}</th>
+					<th>{f:translate(key:'userId')}</th>
+					<th>{f:translate(key:'record')}</th>
+					<th>{f:translate(key:'requestId')}</th>
+					<th>{f:translate(key:'context')}</th>
+					<th>{f:translate(key:'extra')}</th>
+				</tr>
+
+				<f:for each="{logs}" as="log">
+					<f:render section="line" arguments="{log:log}" />
+				</f:for>
+				<tfoot>
+				<tr>
+					<td colspan="10">
+						{f:translate(key:'countEntries')}: <strong>{f:count(subject:logs)}</strong>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</f:then>
+		<f:else>
+			<div class="typo3-message message-information">
+				<f:translate key="noLogsFound" />
+			</div>
+		</f:else>
+	</f:if>
+
+</f:section>
+
+<f:section name="line">
+	<tr>
+		<td style="width:150px" class="nobr">
+			<f:format.date date="{log.datetime}" format="%D %T" />
+		</td>
+		<td>{log.mode}</td>
+		<td class="nobr">{log.channel}</td>
+		<td class="nobr"><f:translate key="level.{log.level}" /></td>
+		<td>{log.message}</td>
+		<td class="nobr">
+			<f:if condition="{log.userId}">{log.userId}</f:if>
+		</td>
+		<td class="nobr">
+			<f:if condition="{log.recordId}">{log.tablename} {log.recordId}</f:if>
+		</td>
+		<td class="nobr">{log.requestId}</td>
+		<td class="nobr">
+			<f:if condition="{log.context}">
+				<div class="toggle-information">
+					<a href="javascript:void(0);" class="click">{f:translate(key:'toggle')}</a>
+
+					<div class="content" style="display: none">
+						<f:debug inline="1" title="">{log.context}</f:debug>
+					</div>
+				</div>
+
+			</f:if>
+		</td>
+		<td class="nobr">
+			<f:if condition="{log.extra}">
+				<div class="toggle-information">
+					<a href="javascript:void(0);" class="click">{f:translate(key:'toggle')}</a>
+
+					<div class="content" style="display: none">
+						<f:debug inline="1" title="">{log.extra}</f:debug>
+					</div>
+				</div>
+			</f:if>
+		</td>
+	</tr>
+</f:section>
