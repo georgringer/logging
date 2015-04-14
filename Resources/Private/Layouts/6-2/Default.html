@@ -1,0 +1,28 @@
+<f:be.container loadJQuery="1" includeJsFiles="{0: '{f:uri.resource(path:\'JavaScript/logging-6.js\')}'}" includeCssFiles="{0: '{f:uri.resource(path:\'Styles/6-2.css\')}'}">
+	<div class="typo3-fullDoc">
+		<div id="typo3-docheader">
+			<div class="typo3-docheader-functions">
+				<div class="left">
+					<f:be.menus.actionMenu>
+						<f:be.menus.actionMenuItem label="{f:translate(key:'action.list')}" controller="Log" action="list" />
+						<f:be.menus.actionMenuItem label="{f:translate(key:'action.clear')}" controller="Log" action="clear" />
+						<f:be.menus.actionMenuItem label="{f:translate(key:'action.demo')}" controller="Log" action="demo" />
+						<f:be.menus.actionMenuItem label="{f:translate(key:'action.configuration')}" controller="Log" action="configuration" />
+					</f:be.menus.actionMenu>
+				</div>
+				<div class="right"></div>
+			</div>
+			<div class="typo3-docheader-buttons">
+				<div class="left"></div>
+				<div class="right">
+					<f:be.buttons.shortcut />
+				</div>
+			</div>
+		</div>
+		<div id="typo3-docbody">
+			<div id="typo3-inner-docbody" class="logging-be">
+				<f:render section="content" />
+			</div>
+		</div>
+	</div>
+</f:be.container>

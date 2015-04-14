@@ -16,6 +16,9 @@ module.tx_logging {
 		templateRootPaths {
 			0 = EXT:logging/Resources/Private/Templates/6-2/
 		}
+		layoutRootPaths {
+			0 = EXT:logging/Resources/Private/Layouts/6-2/
+		}
 	}
 }
 
@@ -24,6 +27,9 @@ module.tx_logging {
 	view {
 		templateRootPaths {
 			0 = EXT:logging/Resources/Private/Templates/7/
+		}
+		layoutRootPaths {
+			0 = EXT:logging/Resources/Private/Layouts/7/
 		}
 	}
 }
