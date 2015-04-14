@@ -20,7 +20,7 @@ namespace GeorgRinger\Logging\Domain\Model\Dto;
  */
 class DemoEntryDemand {
 
-	/** @var int */
+	/** @var string */
 	protected $level;
 
 	/** @var string */
@@ -30,14 +30,14 @@ class DemoEntryDemand {
 	protected $context;
 
 	/**
-	 * @return int
+	 * @return string
 	 */
 	public function getLevel() {
 		return $this->level;
 	}
 
 	/**
-	 * @param int $level
+	 * @param string $level
 	 */
 	public function setLevel($level) {
 		$this->level = $level;
