@@ -94,7 +94,7 @@
 	<f:if condition="{logs}">
 		<f:then>
 			<table class="t3-table">
-				<tr>
+				<tr class="t3-row-header">
 					<th>{f:translate(key:'date')}</th>
 					<th>{f:translate(key:'mode')}</th>
 					<th>{f:translate(key:'channel')}</th>
@@ -129,13 +129,15 @@
 </f:section>
 
 <f:section name="line">
-	<tr>
+	<tr class="db_list_normal">
 		<td style="width:150px" class="nobr">
 			<f:format.date date="{log.datetime}" format="%D %T" />
 		</td>
 		<td>{log.mode}</td>
 		<td class="nobr">{log.channel}</td>
-		<td class="nobr"><f:translate key="level.{log.level}" /></td>
+		<td class="nobr">
+			<f:translate key="level.{log.level}" />
+		</td>
 		<td>{log.message}</td>
 		<td class="nobr">
 			<f:if condition="{log.userId}">{log.userId}</f:if>

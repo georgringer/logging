@@ -19,13 +19,13 @@
 					<f:form.checkbox property="all" class="checkbox" id="log-clearAll" value="1" />
 				</div>
 			</div>
+			<div class="clear"></div>
 		</div>
-
-		<f:form.submit class="button" value="{f:translate(key:'submit')}" />
+		<f:form.submit class="btn btn-default" value="{f:translate(key:'submit')}" />
 	</f:form>
 
 	<f:if condition="{processed}">
-		<div class="alert alert-success">
+		<div class="typo3-message message-ok">
 			<f:translate key="entriesCleared" />
 		</div>
 	</f:if>

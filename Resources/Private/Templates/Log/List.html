@@ -12,7 +12,7 @@
 	<f:form name="demand" object="{demand}">
 		<div class="row">
 			<div class="col-sm-3">
-				<div class="form-gromaup">
+				<div class="form-group">
 					<label for="log-daterange">
 						<f:translate key="dateRange" />
 					</label>
@@ -41,7 +41,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="clear"></div>
 		</div>
 
 		<div class="row">
@@ -83,10 +82,9 @@
 					<f:form.select property="user" options="{users}" id="log-log-user" class="form-control" />
 				</div>
 			</div>
-			<div class="clear"></div>
 		</div>
 
-		<f:form.submit class="button" value="{f:translate(key:'submit')}" />
+		<f:form.submit class="btn btn-default" value="{f:translate(key:'submit')}" />
 	</f:form>
 
 	<f:if condition="{logs}">
