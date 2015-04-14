@@ -32,7 +32,7 @@ Screenshots
 Requirements
 ^^^^^^^^^^^^
 
-* TYPO3.CMS 7.x (PHP 5.5!)
+* TYPO3.CMS 6.2.10 but works best with 7.x
 * Your project set up with composer and ```monolog/monolog``` as requirement. ::
 
 	{
@@ -47,7 +47,7 @@ Requirements
 		}
 	  ],
 	  "require": {
-		"typo3/cms": "7.0.0",
+		"typo3/cms": "7.1",
 		"georgringer/logging": "dev-master",
 		"monolog/monolog": "*"
 	  }
