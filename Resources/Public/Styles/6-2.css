@@ -1,3 +1,7 @@
+.logging-be label {
+  font-weight: bold;
+  display: block;
+}
 .logging-be .row {
   padding: 5px 0;
 }
@@ -6,10 +10,18 @@
   width: 24%;
   margin-right: 5px;
 }
+.logging-be .col-sm-3 input,
+.logging-be .col-sm-3 select {
+  width: 90%;
+}
 .logging-be .col-sm-2 {
   margin-right: 5px;
   width: 16.66666667%;
   float: left;
+}
+.logging-be .col-sm-2 input,
+.logging-be .col-sm-2 select {
+  width: 90%;
 }
 .logging-be .clear {
   clear: both;

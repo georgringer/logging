@@ -9,28 +9,17 @@ module.tx_logging {
 			}
 		}
 	}
-}
 
-module.tx_logging {
 	view {
-		templateRootPaths {
-			0 = EXT:logging/Resources/Private/Templates/6-2/
-		}
-		layoutRootPaths {
-			0 = EXT:logging/Resources/Private/Layouts/6-2/
-		}
+		templateRootPaths.0 = EXT:logging/Resources/Private/Templates/6-2/
+		layoutRootPaths.0 = EXT:logging/Resources/Private/Layouts/6-2/
 	}
 }
+
 
 [compatVersion = 7.0]
-module.tx_logging {
-	view {
-		templateRootPaths {
-			0 = EXT:logging/Resources/Private/Templates/7/
-		}
-		layoutRootPaths {
-			0 = EXT:logging/Resources/Private/Layouts/7/
-		}
+	module.tx_logging.view {
+		templateRootPaths.0 = EXT:logging/Resources/Private/Templates/7/
+		layoutRootPaths.0 = EXT:logging/Resources/Private/Layouts/7/
 	}
-}
 [global]

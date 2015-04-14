@@ -134,7 +134,7 @@
 				<source>Extra</source>
 			</trans-unit>
 			<trans-unit id="toggle">
-				<source>Show/hide more</source>
+				<source>Toggle additional info</source>
 			</trans-unit>
 			<trans-unit id="noLogsFound">
 				<source>Sorry, no logs currently found</source>

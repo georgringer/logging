@@ -6,7 +6,9 @@
 					<f:be.menus.actionMenu>
 						<f:be.menus.actionMenuItem label="{f:translate(key:'action.list')}" controller="Log" action="list" />
 						<f:be.menus.actionMenuItem label="{f:translate(key:'action.clear')}" controller="Log" action="clear" />
-						<f:be.menus.actionMenuItem label="{f:translate(key:'action.demo')}" controller="Log" action="demo" />
+						<f:if condition="{extensionConfiguration.demo}">
+							<f:be.menus.actionMenuItem label="{f:translate(key:'action.demo')}" controller="Log" action="demo" />
+						</f:if>
 						<f:be.menus.actionMenuItem label="{f:translate(key:'action.configuration')}" controller="Log" action="configuration" />
 					</f:be.menus.actionMenu>
 				</div>

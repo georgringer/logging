@@ -24,6 +24,11 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class LogController extends ActionController {
 
 	/**
+	 * @var \GeorgRinger\Logging\Domain\Repository\LogEntryRepository
+	 */
+	protected $logEntryRepository;
+
+	/**
 	 * @param \GeorgRinger\Logging\Domain\Model\Dto\ListDemand $demand
 	 * @return void
 	 */
@@ -101,7 +106,8 @@ class LogController extends ActionController {
 				5 => $this->translate('dateRange.lastMonth'),
 				6 => $this->translate('dateRange.last31Days'),
 				7 => $this->translate('dateRange.userDefined'),
-			)
+			),
+			'extensionConfiguration' => unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['logging'])
 		));
 	}
 
@@ -111,11 +117,13 @@ class LogController extends ActionController {
 	 * @return void
 	 */
 	protected function loadJsForDatePicker() {
-		/** @var \TYPO3\CMS\Backend\Template\DocumentTemplate $documentTemplate */
-		$documentTemplate = GeneralUtility::makeInstance('TYPO3\\CMS\\Backend\\Template\\DocumentTemplate');
-		$pageRenderer = $documentTemplate->getPageRenderer();
-		$dateFormat = ($GLOBALS['TYPO3_CONF_VARS']['SYS']['USdateFormat'] ? array('MM-DD-YYYY', 'HH:mm MM-DD-YYYY') : array('DD-MM-YYYY', 'HH:mm DD-MM-YYYY'));
-		$pageRenderer->addInlineSetting('DateTimePicker', 'DateFormat', $dateFormat);
+		if (GeneralUtility::compat_version('7.0')) {
+			/** @var \TYPO3\CMS\Backend\Template\DocumentTemplate $documentTemplate */
+			$documentTemplate = GeneralUtility::makeInstance('TYPO3\\CMS\\Backend\\Template\\DocumentTemplate');
+			$pageRenderer = $documentTemplate->getPageRenderer();
+			$dateFormat = ($GLOBALS['TYPO3_CONF_VARS']['SYS']['USdateFormat'] ? array('MM-DD-YYYY', 'HH:mm MM-DD-YYYY') : array('DD-MM-YYYY', 'HH:mm DD-MM-YYYY'));
+			$pageRenderer->addInlineSetting('DateTimePicker', 'DateFormat', $dateFormat);
+		}
 	}
 
 	/**
@@ -128,11 +136,6 @@ class LogController extends ActionController {
 	protected function translate($key, $arguments = array()) {
 		return LocalizationUtility::translate($key, 'logging', $arguments);
 	}
-
-	/**
-	 * @var \GeorgRinger\Logging\Domain\Repository\LogEntryRepository
-	 */
-	protected $logEntryRepository;
 
 	/**
 	 * @param \GeorgRinger\Logging\Domain\Repository\LogEntryRepository $logEntryRepository

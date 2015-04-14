@@ -63,7 +63,7 @@ Install the extension as always.  Currently (state of 7.1), packages installed v
 be required by yourself. You can do that by using the following line in your ```typo3conf/AdditionalConfiguration.php``` file: ::
 
 	<?php
-		require_once(__DIR__ . '/../Packages/Libraries/autoload.php');
+		require_once(__DIR__ . '/../vendor/autoload.php');
 
 Configuration
 -------------

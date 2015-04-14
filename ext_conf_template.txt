@@ -1,0 +1,2 @@
+	# cat=Basic/enable/2; type=boolean; label=Show view to add demo entries
+demo = 0

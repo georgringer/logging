@@ -14,7 +14,7 @@ namespace GeorgRinger\Logging\Log;
  * The TYPO3 project - inspiring people to share!
  */
 use Monolog\Logger;
-use TYPO3\CMS\Core\Log\LogManagerInterface;
+//use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 
 /**
@@ -22,7 +22,7 @@ use TYPO3\CMS\Core\SingletonInterface;
  *
  * Inspired by java.util.logging
  */
-class MonologManager implements SingletonInterface, LogManagerInterface {
+class MonologManager implements SingletonInterface {
 
 	const CONFIGURATION_TYPE_HANDLER = 'handler';
 	const CONFIGURATION_TYPE_PROCESSOR = 'processor';
