@@ -5,24 +5,90 @@
 .logging-be .row {
   padding: 5px 0;
 }
-.logging-be .col-sm-3 {
+.logging-be .col-sm-2,
+.logging-be .col-sm-3,
+.logging-be .col-sm-4 {
   float: left;
-  width: 24%;
   margin-right: 5px;
-}
-.logging-be .col-sm-3 input,
-.logging-be .col-sm-3 select {
-  width: 90%;
-}
-.logging-be .col-sm-2 {
-  margin-right: 5px;
-  width: 16.66666667%;
-  float: left;
 }
 .logging-be .col-sm-2 input,
-.logging-be .col-sm-2 select {
+.logging-be .col-sm-3 input,
+.logging-be .col-sm-4 input,
+.logging-be .col-sm-2 select,
+.logging-be .col-sm-3 select,
+.logging-be .col-sm-4 select {
   width: 90%;
 }
-.logging-be .clear {
+.logging-be .col-sm-2 input[type='checkbox'],
+.logging-be .col-sm-3 input[type='checkbox'],
+.logging-be .col-sm-4 input[type='checkbox'] {
+  width: auto;
+}
+.logging-be .col-sm-4 {
+  width: 32%;
+}
+.logging-be .col-sm-3 {
+  width: 24%;
+}
+.logging-be .col-sm-2 {
+  width: 16.66666667%;
+}
+.logging-be :before,
+.logging-be *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.logging-be .clearfix:before,
+.logging-be .clearfix:after,
+.logging-be .dl-horizontal dd:before,
+.logging-be .dl-horizontal dd:after,
+.logging-be .container:before,
+.logging-be .container:after,
+.logging-be .container-fluid:before,
+.logging-be .container-fluid:after,
+.logging-be .row:before,
+.logging-be .row:after,
+.logging-be .form-horizontal .form-group:before,
+.logging-be .form-horizontal .form-group:after,
+.logging-be .btn-toolbar:before,
+.logging-be .btn-toolbar:after,
+.logging-be .btn-group-vertical > .btn-group:before,
+.logging-be .btn-group-vertical > .btn-group:after,
+.logging-be .nav:before,
+.logging-be .nav:after,
+.logging-be .navbar:before,
+.logging-be .navbar:after,
+.logging-be .navbar-header:before,
+.logging-be .navbar-header:after,
+.logging-be .navbar-collapse:before,
+.logging-be .navbar-collapse:after,
+.logging-be .panel-body:before,
+.logging-be .panel-body:after,
+.logging-be .modal-footer:before,
+.logging-be .modal-footer:after,
+.logging-be .pagination-block:before,
+.logging-be .pagination-block:after,
+.logging-be .form-irre-header-body dl dd:before,
+.logging-be .form-irre-header-body dl dd:after {
+  content: " ";
+  display: table;
+}
+.logging-be .clearfix:after,
+.logging-be .dl-horizontal dd:after,
+.logging-be .container:after,
+.logging-be .container-fluid:after,
+.logging-be .row:after,
+.logging-be .form-horizontal .form-group:after,
+.logging-be .btn-toolbar:after,
+.logging-be .btn-group-vertical > .btn-group:after,
+.logging-be .nav:after,
+.logging-be .navbar:after,
+.logging-be .navbar-header:after,
+.logging-be .navbar-collapse:after,
+.logging-be .panel-body:after,
+.logging-be .modal-footer:after,
+.logging-be .pagination-block:after,
+.logging-be .form-irre-header-body dl dd:after {
   clear: both;
 }

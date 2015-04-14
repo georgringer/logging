@@ -1,0 +1,30 @@
+<h1>
+	<f:translate key="demo.header" />
+</h1>
+
+<p class="lead">
+	<f:translate key="demo.lead" />
+</p>
+
+<f:form name="demo" object="{demo}" action="demo">
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="log-message">
+					<f:translate key="message" />
+				</label>
+				<f:form.textfield property="message" class="form-control" id="log-message" />
+			</div>
+		</div>
+		<div class="col-sm-2">
+			<div class="form-group">
+				<label for="log-levels">
+					<f:translate key="level" />
+				</label>
+				<f:form.select property="level" options="{levels}" id="log-levels" class="form-control" />
+			</div>
+		</div>
+	</div>
+
+	<f:form.submit class="button" value="{f:translate(key:'submit')}" />
+</f:form>
