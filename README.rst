@@ -94,9 +94,11 @@ This is the configuration of a simple file logger which is written to ```typo3te
 			'name' => 'General',
 			'handlers' => array(
 				\Monolog\Handler\StreamHandler::class => array(
-					PATH_site . 'typo3temp/out.log',
-					\Monolog\Logger::ERROR
-				),
+					'configuration' => array(
+						PATH_site . 'typo3temp/out.log',
+						\Monolog\Logger::ERROR
+					)
+				)
 			)
 		)
 	);
@@ -146,14 +148,24 @@ You might ignore debugging information, write warnings to a file and send errors
 			'name' => 'General',
 			'handlers' => array(
 				\Monolog\Handler\NativeMailerHandler::class => array(
-					'admin@example.org',
-					'Error from website',
-					'no-reply@example.org',
-					\Monolog\Logger::ERROR
+					'configuration' => array(
+						'admin@example.org',
+						'Error from website',
+						'no-reply@example.org',
+						\Monolog\Logger::ERROR
+					),
 				),
 				\Monolog\Handler\StreamHandler::class => array(
-					PATH_site . 'typo3temp/out.log',
-					\Monolog\Logger::WARNING
+					'configuration' => array(
+						PATH_site . 'typo3temp/out.log',
+						\Monolog\Logger::WARNING
+					),
+				),
+				\Monolog\Handler\SocketHandler::class => array(
+					'configuration' => array(
+						'tcp://46.101.133.231:7000'
+					),
+					'formatter' => array(\Monolog\Formatter\LogstashFormatter::class, array('Application', 'System')),
 				),
 			)
 		)
@@ -173,9 +185,11 @@ Therefore, add the namespace of the specific extension to the logging configurat
 			'name' => 'General',
 			'handlers' => array(
 				\Monolog\Handler\StreamHandler::class => array(
-					PATH_site . 'typo3temp/out.log',
-					\Monolog\Logger::WARNING
-				),
+					'configuration' => array(
+						PATH_site . 'typo3temp/out.log',
+						\Monolog\Logger::WARNING
+					)
+				)
 			)
 		)
 	);
@@ -184,15 +198,19 @@ Therefore, add the namespace of the specific extension to the logging configurat
 			'name' => 'Important Extension',
 			'handlers' => array(
 				\Monolog\Handler\NativeMailerHandler::class => array(
-					'admin@example.org',
-					'Error from website',
-					'no-reply@example.org',
-					\Monolog\Logger::WARNING
+					'configuration' => array(
+						'admin@example.org',
+						'Error from website',
+						'no-reply@example.org',
+						\Monolog\Logger::WARNING
+					)
 				),
 				\Monolog\Handler\StreamHandler::class => array(
-					PATH_site . 'typo3temp/out.log',
-					\Monolog\Logger::WARNING
-				),
+					'configuration' => array(
+						PATH_site . 'typo3temp/out.log',
+						\Monolog\Logger::WARNING
+					)
+				)
 			)
 		)
 	);

@@ -13,6 +13,7 @@ namespace GeorgRinger\Logging\Log;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use Monolog\Formatter\LogstashFormatter;
 use Monolog\Logger;
 //use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -80,16 +81,32 @@ class MonologManager implements SingletonInterface {
 		$configuration = $this->getConfigurationForLogger(self::CONFIGURATION_TYPE_HANDLER, $name);
 
 		if (isset($configuration['handlers'])) {
-			foreach ($configuration['handlers'] as $handlerClassName => $options) {
-				try {
-					if (!empty($options)) {
-						array_unshift($options, ' ');
+			foreach ($configuration['handlers'] as $handlerClassName => $handlerConfiguration) {
+				if (is_array($handlerConfiguration) && !empty($handlerConfiguration)) {
+					try {
+						if (!isset($handlerConfiguration['configuration'])) {
+							$handlerConfiguration['configuration'] = array();
+						}
+
+						if (!empty($handlerConfiguration['configuration'])) {
+							array_unshift($handlerConfiguration['configuration'], ' ');
+						}
+
+						/** @var \Monolog\Handler\HandlerInterface $handler */
+						$handler = $this->instantiateClass($handlerClassName, $handlerConfiguration['configuration']);
+
+						if (isset($handlerConfiguration['formatter'])) {
+							$formatterClassName = $handlerConfiguration['formatter'][0];
+							$options = (array)$handlerConfiguration['formatter'][1];
+
+							$formatter = $this->instantiateClass($formatterClassName, $options);
+							$handler->setFormatter($formatter);
+						}
+
+						$logger->pushHandler($handler);
+					} catch (\RangeException $e) {
+						die('x' . $e->getMessage());
 					}
-					/** @var \Monolog\Handler\HandlerInterface $handler */
-					$handler = $this->instantiateClass($handlerClassName, $options);
-					$logger->pushHandler($handler);
-				} catch (\RangeException $e) {
-					die('x' . $e->getMessage());
 				}
 			}
 		}
