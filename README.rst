@@ -35,6 +35,10 @@ Requirements
 * TYPO3.CMS 6.2.10 but works best with 7.x
 * Your project set up with composer and ```monolog/monolog``` as requirement. ::
 
+	"config": {
+		"vendor-dir": "Packages/Libraries",
+		"bin-dir": "bin"
+	},
 	{
 	  "repositories": [
 		{
@@ -59,11 +63,9 @@ It might be possible that a later release will bring support for 6.2 LTS.
 Installation
 ^^^^^^^^^^^^
 
-Install the extension as always.  Currently (state of 7.1), packages installed via composer are **not loaded** and must
-be required by yourself. You can do that by using the following line in your ```typo3conf/AdditionalConfiguration.php``` file: ::
+Install the extension as always.  Currently (state of 7.2), packages installed via composer are automatically loaded. For 6.2 LTS, set the environment variable ``TYPO3_COMPOSER_AUTOLOAD`` to 1, e.g. in your ``.htaccess``: ::
 
-	<?php
-		require_once(__DIR__ . '/../vendor/autoload.php');
+	SetEnv TYPO3_COMPOSER_AUTOLOAD 1
 
 Configuration
 -------------
