@@ -163,7 +163,7 @@ You might ignore debugging information, write warnings to a file and send errors
 				),
 				\Monolog\Handler\SocketHandler::class => array(
 					'configuration' => array(
-						'tcp://46.101.133.231:7000'
+						'tcp://127.0.0.1:7000'
 					),
 					'formatter' => array(\Monolog\Formatter\LogstashFormatter::class, array('Application', 'System')),
 				),
