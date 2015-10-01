@@ -20,6 +20,7 @@ use Monolog\Handler\AbstractProcessingHandler;
 class DatabaseHandler extends AbstractProcessingHandler {
 
 	const TABLE = 'sys_log2';
+	const MAX_SIZE_IN_KB = 63;
 
 	/** @var \TYPO3\CMS\Core\Database\DatabaseConnection */
 	protected $databaseConnection = NULL;
@@ -52,10 +53,10 @@ class DatabaseHandler extends AbstractProcessingHandler {
 			'level' => $record['formatted']['level'],
 			'level_name' => $record['formatted']['level_name'],
 			'request_id' => $record['formatted']['extra']['process_id'],
-			'context' => !empty($record['formatted']['context']) ? json_encode($recordCopy['formatted']['context']) : '',
+			'context' => !empty($record['formatted']['context']) ? $this->checkMaxSizeOfString(json_encode($recordCopy['formatted']['context'])) : '',
 			'message' => $record['formatted']['message'],
 			'datetime' => $record['formatted']['datetime'],
-			'extra' => !empty($recordCopy['formatted']['extra']) ? json_encode($recordCopy['formatted']['extra']) : '',
+			'extra' => !empty($recordCopy['formatted']['extra']) ? $this->checkMaxSizeOfString(json_encode($recordCopy['formatted']['extra'])) : '',
 			'mode' => $record['formatted']['extra']['mode'],
 			'user_id' => $record['formatted']['extra']['user_id'],
 			'tablename' => (string)$record['formatted']['context']['tablename'],
@@ -63,6 +64,15 @@ class DatabaseHandler extends AbstractProcessingHandler {
 		);
 
 		return $insert;
+	}
+
+	protected function checkMaxSizeOfString($in) {
+		$size = mb_strlen($in, '8bit') / 1024;
+		if ($size > self::MAX_SIZE_IN_KB) {
+			return json_encode(array('SORRY' => 'Size of options too large'));
+		}
+
+		return $in;
 	}
 
 	/**
