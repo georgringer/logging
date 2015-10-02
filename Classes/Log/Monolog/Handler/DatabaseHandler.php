@@ -34,7 +34,7 @@ class DatabaseHandler extends AbstractProcessingHandler {
 	protected function write(array $record) {
 		$insert = $this->transformEntry($record);
 		if ($this->getDataBaseConnection()->exec_INSERTquery(self::TABLE, $insert) === FALSE) {
-			throw new \RuntimeException('Could not write log record to database', 1345036334);
+		//	throw new \RuntimeException('Could not write log record to database', 1345036334);
 		}
 	}
 
