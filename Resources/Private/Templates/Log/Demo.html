@@ -1,11 +1,10 @@
 <f:layout name="Default" />
 
 <f:section name="content">
-
 	<f:render partial="Demo" arguments="{_all}" />
 
 	<f:if condition="{added}">
-		<div class="typo3-message message-ok">
+		<div class="alert alert-success">
 			<f:translate key="demoEntryAdded" />
 		</div>
 	</f:if>

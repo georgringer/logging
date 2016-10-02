@@ -13,6 +13,7 @@ namespace GeorgRinger\Logging\Controller;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
@@ -117,13 +118,9 @@ class LogController extends ActionController {
 	 * @return void
 	 */
 	protected function loadJsForDatePicker() {
-		if (GeneralUtility::compat_version('7.0')) {
-			/** @var \TYPO3\CMS\Backend\Template\DocumentTemplate $documentTemplate */
-			$documentTemplate = GeneralUtility::makeInstance('TYPO3\\CMS\\Backend\\Template\\DocumentTemplate');
-			$pageRenderer = $documentTemplate->getPageRenderer();
-			$dateFormat = ($GLOBALS['TYPO3_CONF_VARS']['SYS']['USdateFormat'] ? array('MM-DD-YYYY', 'HH:mm MM-DD-YYYY') : array('DD-MM-YYYY', 'HH:mm DD-MM-YYYY'));
-			$pageRenderer->addInlineSetting('DateTimePicker', 'DateFormat', $dateFormat);
-		}
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $dateFormat = ($GLOBALS['TYPO3_CONF_VARS']['SYS']['USdateFormat'] ? array('MM-DD-YYYY', 'HH:mm MM-DD-YYYY') : array('DD-MM-YYYY', 'HH:mm DD-MM-YYYY'));
+        $pageRenderer->addInlineSetting('DateTimePicker', 'DateFormat', $dateFormat);
 	}
 
 	/**

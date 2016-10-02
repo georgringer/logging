@@ -10,16 +10,4 @@ module.tx_logging {
 		}
 	}
 
-	view {
-		templateRootPaths.0 = EXT:logging/Resources/Private/Templates/
-		layoutRootPaths.0 = EXT:logging/Resources/Private/Layouts/6-2/
-	}
 }
-
-
-[compatVersion = 7.0]
-	module.tx_logging.view {
-		templateRootPaths.1 = EXT:logging/Resources/Private/Templates/7/
-		layoutRootPaths.0 = EXT:logging/Resources/Private/Layouts/7/
-	}
-[global]
