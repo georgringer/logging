@@ -32,7 +32,7 @@ Screenshots
 Requirements
 ^^^^^^^^^^^^
 
-* TYPO3.CMS 6.2.10 but works best with 7.x
+* TYPO3.CMS 7.6+
 * Your project set up with composer and ```monolog/monolog``` as requirement. ::
 
 	"config": {
