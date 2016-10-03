@@ -1,6 +1,6 @@
 {
   "name": "georgringer/logging",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Logging for TYPO3 CMS",
   "type": "typo3-cms-extension",
   "replace": {
@@ -13,5 +13,5 @@
     "psr-4": {
       "GeorgRinger\\Logging\\": "Classes"
     }
-  },
+  }
 }
