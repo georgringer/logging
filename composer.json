@@ -58,5 +58,5 @@
   "replace": {
     "logging": "self.version",
     "typo3-ter/logging": "self.version"
-  },
+  }
 }
