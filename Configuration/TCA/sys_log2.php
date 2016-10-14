@@ -10,7 +10,7 @@ $GLOBALS['TCA']['sys_log2'] = array(
 		'dividers2tabs' => TRUE,
 		'searchFields' => '',
 		'hideTable' => TRUE,
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('logging') . 'Resources/Public/Icons/tx_logging_domain_model_log.gif'
+		'iconfile' => 'EXT:logging/Resources/Public/Icons/tx_logging_domain_model_log.gif'
 	),
 	'interface' => array(
 		'showRecordFieldList' => '',
