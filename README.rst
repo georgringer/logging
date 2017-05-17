@@ -33,7 +33,7 @@ Requirements
 ^^^^^^^^^^^^
 
 * TYPO3.CMS 7.6+
-* Your project set up with composer and ```monolog/monolog``` as requirement. ::
+* Your project set up with composer and `monolog/monolog` as requirement. ::
 
 	"config": {
 		"vendor-dir": "Packages/Libraries",
@@ -63,14 +63,14 @@ It might be possible that a later release will bring support for 6.2 LTS.
 Installation
 ^^^^^^^^^^^^
 
-Install the extension as always.  Currently (state of 7.2), packages installed via composer are automatically loaded. For 6.2 LTS, set the environment variable ``TYPO3_COMPOSER_AUTOLOAD`` to 1, e.g. in your ``.htaccess``: ::
+Install the extension as always.  Currently (state of 7.2), packages installed via composer are automatically loaded. For 6.2 LTS, set the environment variable `TYPO3_COMPOSER_AUTOLOAD` to 1, e.g. in your `.htaccess`: ::
 
 	SetEnv TYPO3_COMPOSER_AUTOLOAD 1
 
 Configuration
 -------------
 
-The configuration can be added to your ```typo3conf/AdditionalConfiguration.php``` file. The API is inspired by the
+The configuration can be added to your `typo3conf/AdditionalConfiguration.php` file. The API is inspired by the
 current Logging framework of TYPO3 CMS.
 
 The following logging levels are available: ::
@@ -87,7 +87,7 @@ The following logging levels are available: ::
 Simple file logger
 ^^^^^^^^^^^^^^^^^^
 
-This is the configuration of a simple file logger which is written to ```typo3temp/out.log```. ::
+This is the configuration of a simple file logger which is written to `typo3temp/out.log`. ::
 
 	$GLOBALS['TYPO3_CONF_VARS']['MONOLOG'] = array(
 		'handlerConfiguration' => array(
@@ -112,17 +112,18 @@ Log to the database
 
 Sometimes it makes sense to log to the database. You can do that with the following configuration: ::
 
-	$GLOBALS['TYPO3_CONF_VARS']['MONOLOG'] = array(
-		'processorConfiguration' => array(
-			\GeorgRinger\Logging\Log\Monolog\Processor\Typo3Processor::class => array()
-		),
-		'handlerConfiguration' => array(
-			'name' => 'General',
-			'handlers' => array(
-				\GeorgRinger\Logging\Log\Monolog\Handler\DatabaseHandler::class => array()
-			)
-		)
-	);
+   $GLOBALS['TYPO3_CONF_VARS']['MONOLOG'] = [
+      'processorConfiguration' => [
+         \GeorgRinger\Logging\Log\Monolog\Processor\Typo3Processor::class => []
+      ],
+      'handlerConfiguration' => [
+         'name' => 'General',
+         'handlers' => [
+            \GeorgRinger\Logging\Log\Monolog\Handler\DatabaseHandler::class => []
+         ]
+      ]
+   ];
+
 
 The **Typo3Processor** will add additional information to the log entry:
 
@@ -215,7 +216,7 @@ Therefore, add the namespace of the specific extension to the logging configurat
 		)
 	);
 
-In the example above, every logging call within the namespace of ``GeorgRinger\Shop`` will trigger the 2nd configuration.
+In the example above, every logging call within the namespace of `GeorgRinger\Shop` will trigger the 2nd configuration.
 All other calls will be handled by the first configuration.
 
 How to log
