@@ -71,6 +71,7 @@ class MonologManager implements SingletonInterface
             $this->setProcessorsForLogger($logger, $name);
             $this->loggers[$name] = $logger;
         }
+
         return $logger;
     }
 
@@ -81,10 +82,9 @@ class MonologManager implements SingletonInterface
     protected function setHandlers(Logger $logger, $name)
     {
         $configuration = $this->getConfigurationForLogger(self::CONFIGURATION_TYPE_HANDLER, $name);
-
         if (isset($configuration['handlers'])) {
             foreach ($configuration['handlers'] as $handlerClassName => $handlerConfiguration) {
-                if (is_array($handlerConfiguration) && !empty($handlerConfiguration)) {
+                if (is_array($handlerConfiguration)) {
                     try {
                         if (!isset($handlerConfiguration['configuration'])) {
                             $handlerConfiguration['configuration'] = [];
