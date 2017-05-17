@@ -18,57 +18,63 @@ namespace GeorgRinger\Logging\Domain\Model\Dto;
 /**
  * Class Demo
  */
-class DemoEntryDemand {
+class DemoEntryDemand
+{
 
-	/** @var string */
-	protected $level;
+    /** @var string */
+    protected $level;
 
-	/** @var string */
-	protected $message;
+    /** @var string */
+    protected $message;
 
-	/** @var string */
-	protected $context;
+    /** @var string */
+    protected $context;
 
-	/**
-	 * @return string
-	 */
-	public function getLevel() {
-		return $this->level;
-	}
+    /**
+     * @return string
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
 
-	/**
-	 * @param string $level
-	 */
-	public function setLevel($level) {
-		$this->level = $level;
-	}
+    /**
+     * @param string $level
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getMessage() {
-		return $this->message;
-	}
+    /**
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
 
-	/**
-	 * @param string $message
-	 */
-	public function setMessage($message) {
-		$this->message = $message;
-	}
+    /**
+     * @param string $message
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getContext() {
-		return $this->context;
-	}
+    /**
+     * @return string
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
 
-	/**
-	 * @param string $context
-	 */
-	public function setContext($context) {
-		$this->context = $context;
-	}
-
+    /**
+     * @param string $context
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+    }
 }
