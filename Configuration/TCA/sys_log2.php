@@ -7,10 +7,8 @@ $GLOBALS['TCA']['sys_log2'] = array(
 	'ctrl' => array(
 		'title' => 'LLL:EXT:logging/Resources/Private/Language/locallang_db.xlf:tx_logging_domain_model_log',
 		'label' => 'uid',
-		'dividers2tabs' => TRUE,
 		'searchFields' => '',
 		'hideTable' => TRUE,
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('logging') . 'Resources/Public/Icons/tx_logging_domain_model_log.gif'
 	),
 	'interface' => array(
 		'showRecordFieldList' => '',
