@@ -13,7 +13,6 @@ namespace GeorgRinger\Logging\Log;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Monolog\Formatter\LogstashFormatter;
 use Monolog\Logger;
 //use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -23,208 +22,215 @@ use TYPO3\CMS\Core\SingletonInterface;
  *
  * Inspired by java.util.logging
  */
-class MonologManager implements SingletonInterface {
+class MonologManager implements SingletonInterface
+{
+    const CONFIGURATION_TYPE_HANDLER = 'handler';
+    const CONFIGURATION_TYPE_PROCESSOR = 'processor';
 
-	const CONFIGURATION_TYPE_HANDLER = 'handler';
-	const CONFIGURATION_TYPE_PROCESSOR = 'processor';
+    /**
+     * Loggers to retrieve them for repeated use.
+     *
+     * @var array
+     */
+    protected $loggers = [];
 
-	/**
-	 * Loggers to retrieve them for repeated use.
-	 *
-	 * @var array
-	 */
-	protected $loggers = array();
+    /**
+     * For use in unit test context only. Resets the internal logger registry.
+     *
+     * @return void
+     */
+    public function reset()
+    {
+        $this->loggers = [];
+    }
 
-	/**
-	 * For use in unit test context only. Resets the internal logger registry.
-	 *
-	 * @return void
-	 */
-	public function reset() {
-		$this->loggers = array();
-	}
+    /**
+     * @param string $name
+     * @return Logger
+     */
+    public function getLogger($name = '')
+    {
+        /** @var $logger Logger */
+        $logger = null;
 
-	/**
-	 * @param string $name
-	 * @return Logger
-	 */
-	public function getLogger($name = '') {
-		/** @var $logger Logger */
-		$logger = NULL;
+        // Transform namespaces and underscore class names to the dot-name style
+        $separators = ['_', '\\'];
+        $name = str_replace($separators, '.', $name);
+        if (isset($this->loggers[$name])) {
+            $logger = $this->loggers[$name];
+        } else {
+            $configuration = $this->getConfigurationForLogger('handler', $name);
+            $readableName = $name;
+            if (isset($configuration['name'])) {
+                $readableName = $configuration['name'];
+            }
+            // Lazy instantiation
+            /** @var $logger Logger */
+            $logger = new Logger($readableName);
+            $this->setHandlers($logger, $name);
+            $this->setProcessorsForLogger($logger, $name);
+            $this->loggers[$name] = $logger;
+        }
+        return $logger;
+    }
 
-		// Transform namespaces and underscore class names to the dot-name style
-		$separators = array('_', '\\');
-		$name = str_replace($separators, '.', $name);
-		if (isset($this->loggers[$name])) {
-			$logger = $this->loggers[$name];
-		} else {
-			$configuration = $this->getConfigurationForLogger('handler', $name);
-			$readableName = $name;
-			if (isset($configuration['name'])) {
-				$readableName = $configuration['name'];
-			}
-			// Lazy instantiation
-			/** @var $logger Logger */
-			$logger = new Logger($readableName);
-			$this->setHandlers($logger, $name);
-			$this->setProcessorsForLogger($logger, $name);
-			$this->loggers[$name] = $logger;
-		}
-		return $logger;
-	}
+    /**
+     * @param Logger $logger
+     * @param $name
+     */
+    protected function setHandlers(Logger $logger, $name)
+    {
+        $configuration = $this->getConfigurationForLogger(self::CONFIGURATION_TYPE_HANDLER, $name);
 
-	/**
-	 * @param Logger $logger
-	 * @param $name
-	 */
-	protected function setHandlers(Logger $logger, $name) {
-		$configuration = $this->getConfigurationForLogger(self::CONFIGURATION_TYPE_HANDLER, $name);
+        if (isset($configuration['handlers'])) {
+            foreach ($configuration['handlers'] as $handlerClassName => $handlerConfiguration) {
+                if (is_array($handlerConfiguration) && !empty($handlerConfiguration)) {
+                    try {
+                        if (!isset($handlerConfiguration['configuration'])) {
+                            $handlerConfiguration['configuration'] = [];
+                        }
 
-		if (isset($configuration['handlers'])) {
-			foreach ($configuration['handlers'] as $handlerClassName => $handlerConfiguration) {
-				if (is_array($handlerConfiguration) && !empty($handlerConfiguration)) {
-					try {
-						if (!isset($handlerConfiguration['configuration'])) {
-							$handlerConfiguration['configuration'] = array();
-						}
+                        if (!empty($handlerConfiguration['configuration'])) {
+                            array_unshift($handlerConfiguration['configuration'], ' ');
+                        }
 
-						if (!empty($handlerConfiguration['configuration'])) {
-							array_unshift($handlerConfiguration['configuration'], ' ');
-						}
+                        /** @var \Monolog\Handler\HandlerInterface $handler */
+                        $handler = $this->instantiateClass($handlerClassName, $handlerConfiguration['configuration']);
 
-						/** @var \Monolog\Handler\HandlerInterface $handler */
-						$handler = $this->instantiateClass($handlerClassName, $handlerConfiguration['configuration']);
+                        if (isset($handlerConfiguration['formatter'])) {
+                            $formatterClassName = $handlerConfiguration['formatter'][0];
+                            $options = (array)$handlerConfiguration['formatter'][1];
 
-						if (isset($handlerConfiguration['formatter'])) {
-							$formatterClassName = $handlerConfiguration['formatter'][0];
-							$options = (array)$handlerConfiguration['formatter'][1];
+                            $formatter = $this->instantiateClass($formatterClassName, $options);
+                            $handler->setFormatter($formatter);
+                        }
 
-							$formatter = $this->instantiateClass($formatterClassName, $options);
-							$handler->setFormatter($formatter);
-						}
+                        $logger->pushHandler($handler);
+                    } catch (\RangeException $e) {
+                        die('x' . $e->getMessage());
+                    }
+                }
+            }
+        }
+    }
 
-						$logger->pushHandler($handler);
-					} catch (\RangeException $e) {
-						die('x' . $e->getMessage());
-					}
-				}
-			}
-		}
-	}
+    /**
+     * @param Logger $logger
+     * @param $name
+     */
+    protected function setProcessorsForLogger(Logger $logger, $name)
+    {
+        $configuration = $this->getConfigurationForLogger(self::CONFIGURATION_TYPE_PROCESSOR, $name);
 
-	/**
-	 * @param Logger $logger
-	 * @param $name
-	 */
-	protected function setProcessorsForLogger(Logger $logger, $name) {
-		$configuration = $this->getConfigurationForLogger(self::CONFIGURATION_TYPE_PROCESSOR, $name);
+        foreach ($configuration as $processorClassName => $options) {
+            try {
+                if (!empty($options)) {
+                    array_unshift($options, ' ');
+                }
+                $processor = $this->instantiateClass($processorClassName, $options);
+                $logger->pushProcessor($processor);
+            } catch (\RangeException $e) {
+                die('x' . $e->getMessage());
+            }
+        }
+    }
 
-		foreach ($configuration as $processorClassName => $options) {
-			try {
-				if (!empty($options)) {
-					array_unshift($options, ' ');
-				}
-				$processor = $this->instantiateClass($processorClassName, $options);
-				$logger->pushProcessor($processor);
-			} catch (\RangeException $e) {
-				die('x' . $e->getMessage());
-			}
-		}
-	}
+    /**
+     * Speed optimized alternative to ReflectionClass::newInstanceArgs()
+     *
+     * @param string $className Name of the class to instantiate
+     * @param array $arguments Arguments passed to self::makeInstance() thus the first one with index 0 holds the requested class name
+     * @return mixed
+     */
+    protected function instantiateClass($className, $arguments)
+    {
+        switch (count($arguments)) {
+            case 1:
+                $instance = new $className();
+                break;
+            case 2:
+                $instance = new $className($arguments[1]);
+                break;
+            case 3:
+                $instance = new $className($arguments[1], $arguments[2]);
+                break;
+            case 4:
+                $instance = new $className($arguments[1], $arguments[2], $arguments[3]);
+                break;
+            case 5:
+                $instance = new $className($arguments[1], $arguments[2], $arguments[3], $arguments[4]);
+                break;
+            case 6:
+                $instance = new $className($arguments[1], $arguments[2], $arguments[3], $arguments[4], $arguments[5]);
+                break;
+            case 7:
+                $instance = new $className($arguments[1], $arguments[2], $arguments[3], $arguments[4], $arguments[5], $arguments[6]);
+                break;
+            case 8:
+                $instance = new $className($arguments[1], $arguments[2], $arguments[3], $arguments[4], $arguments[5], $arguments[6], $arguments[7]);
+                break;
+            case 9:
+                $instance = new $className($arguments[1], $arguments[2], $arguments[3], $arguments[4], $arguments[5], $arguments[6], $arguments[7], $arguments[8]);
+                break;
+            default:
+                // The default case for classes with constructors that have more than 8 arguments.
+                // This will fail when one of the arguments shall be passed by reference.
+                // In case we really need to support this edge case, we can implement the solution from here: https://review.typo3.org/26344
+                $class = new \ReflectionClass($className);
+                array_shift($arguments);
+                $instance = $class->newInstanceArgs($arguments);
+                return $instance;
+        }
+        return $instance;
+    }
 
-	/**
-	 * Speed optimized alternative to ReflectionClass::newInstanceArgs()
-	 *
-	 * @param string $className Name of the class to instantiate
-	 * @param array $arguments Arguments passed to self::makeInstance() thus the first one with index 0 holds the requested class name
-	 * @return mixed
-	 */
-	protected function instantiateClass($className, $arguments) {
-		switch (count($arguments)) {
-			case 1:
-				$instance = new $className();
-				break;
-			case 2:
-				$instance = new $className($arguments[1]);
-				break;
-			case 3:
-				$instance = new $className($arguments[1], $arguments[2]);
-				break;
-			case 4:
-				$instance = new $className($arguments[1], $arguments[2], $arguments[3]);
-				break;
-			case 5:
-				$instance = new $className($arguments[1], $arguments[2], $arguments[3], $arguments[4]);
-				break;
-			case 6:
-				$instance = new $className($arguments[1], $arguments[2], $arguments[3], $arguments[4], $arguments[5]);
-				break;
-			case 7:
-				$instance = new $className($arguments[1], $arguments[2], $arguments[3], $arguments[4], $arguments[5], $arguments[6]);
-				break;
-			case 8:
-				$instance = new $className($arguments[1], $arguments[2], $arguments[3], $arguments[4], $arguments[5], $arguments[6], $arguments[7]);
-				break;
-			case 9:
-				$instance = new $className($arguments[1], $arguments[2], $arguments[3], $arguments[4], $arguments[5], $arguments[6], $arguments[7], $arguments[8]);
-				break;
-			default:
-				// The default case for classes with constructors that have more than 8 arguments.
-				// This will fail when one of the arguments shall be passed by reference.
-				// In case we really need to support this edge case, we can implement the solution from here: https://review.typo3.org/26344
-				$class = new \ReflectionClass($className);
-				array_shift($arguments);
-				$instance = $class->newInstanceArgs($arguments);
-				return $instance;
-		}
-		return $instance;
-	}
+    /**
+     * For use in unit test context only.
+     *
+     * @param string $name
+     * @return void
+     */
+    public function registerLogger($name)
+    {
+        $this->loggers[$name] = null;
+    }
 
-	/**
-	 * For use in unit test context only.
-	 *
-	 * @param string $name
-	 * @return void
-	 */
-	public function registerLogger($name) {
-		$this->loggers[$name] = NULL;
-	}
+    /**
+     * For use in unit test context only.
+     *
+     * @return array
+     */
+    public function getLoggerNames()
+    {
+        return array_keys($this->loggers);
+    }
 
-	/**
-	 * For use in unit test context only.
-	 *
-	 * @return array
-	 */
-	public function getLoggerNames() {
-		return array_keys($this->loggers);
-	}
-
-	/**
-	 * Returns the configuration from $TYPO3_CONF_VARS['LOG'] as
-	 * hierarchical array for different components of the class hierarchy.
-	 *
-	 * @param string $configurationType Type of config to return (writer, processor)
-	 * @param string $loggerName Logger name
-	 * @throws \RangeException
-	 * @return array
-	 */
-	protected function getConfigurationForLogger($configurationType, $loggerName) {
-		// Split up the logger name (dot-separated) into its parts
-		$explodedName = explode('.', $loggerName);
-		// Search in the $TYPO3_CONF_VARS['LOG'] array
-		// for these keys, for example "writerConfiguration"
-		$configurationKey = $configurationType . 'Configuration';
-		$configuration = $GLOBALS['TYPO3_CONF_VARS']['MONOLOG'];
-		$result = $configuration[$configurationKey] ?: array();
-		// Walk from general to special (t3lib, t3lib.db, t3lib.db.foo)
-		// and search for the most specific configuration
-		foreach ($explodedName as $partOfClassName) {
-			if (!empty($configuration[$partOfClassName][$configurationKey])) {
-				$result = $configuration[$partOfClassName][$configurationKey];
-			}
-			$configuration = $configuration[$partOfClassName];
-		}
-		return $result;
-	}
-
+    /**
+     * Returns the configuration from $TYPO3_CONF_VARS['LOG'] as
+     * hierarchical array for different components of the class hierarchy.
+     *
+     * @param string $configurationType Type of config to return (writer, processor)
+     * @param string $loggerName Logger name
+     * @throws \RangeException
+     * @return array
+     */
+    protected function getConfigurationForLogger($configurationType, $loggerName)
+    {
+        // Split up the logger name (dot-separated) into its parts
+        $explodedName = explode('.', $loggerName);
+        // Search in the $TYPO3_CONF_VARS['LOG'] array
+        // for these keys, for example "writerConfiguration"
+        $configurationKey = $configurationType . 'Configuration';
+        $configuration = $GLOBALS['TYPO3_CONF_VARS']['MONOLOG'];
+        $result = $configuration[$configurationKey] ?: [];
+        // Walk from general to special (t3lib, t3lib.db, t3lib.db.foo)
+        // and search for the most specific configuration
+        foreach ($explodedName as $partOfClassName) {
+            if (!empty($configuration[$partOfClassName][$configurationKey])) {
+                $result = $configuration[$partOfClassName][$configurationKey];
+            }
+            $configuration = $configuration[$partOfClassName];
+        }
+        return $result;
+    }
 }

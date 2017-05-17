@@ -11,32 +11,32 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 namespace GeorgRinger\Logging\Log\Monolog\Processor;
 
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class Typo3Processor {
-	/**
-	 * @param  array $record
-	 * @return array
-	 */
-	public function __invoke(array $record) {
+class Typo3Processor
+{
+    /**
+     * @param  array $record
+     * @return array
+     */
+    public function __invoke(array $record)
+    {
+        $record['extra']['process_id'] = Bootstrap::getInstance()->getRequestId();
+        $record['extra']['mode'] = TYPO3_MODE;
+        $record['extra']['ip'] = (string)GeneralUtility::getIndpEnv('REMOTE_ADDR');
 
-		$record['extra']['process_id'] = Bootstrap::getInstance()->getRequestId();
-		$record['extra']['mode'] = TYPO3_MODE;
-		$record['extra']['ip'] = (string)GeneralUtility::getIndpEnv('REMOTE_ADDR');
-
-		if (TYPO3_MODE === 'BE') {
-			if (is_object($GLOBALS['BE_USER'])) {
-				$record['extra']['user_id'] = $GLOBALS['BE_USER']->user['uid'];
-			}
-		} elseif (TYPO3_MODE === 'FE') {
-			if (is_object($GLOBALS['TSFE'])) {
-				$record['extra']['user_id'] = $GLOBALS['TSFE']->fe_user->user['uid'];
-			}
-		}
-		return $record;
-	}
+        if (TYPO3_MODE === 'BE') {
+            if (is_object($GLOBALS['BE_USER'])) {
+                $record['extra']['user_id'] = $GLOBALS['BE_USER']->user['uid'];
+            }
+        } elseif (TYPO3_MODE === 'FE') {
+            if (is_object($GLOBALS['TSFE'])) {
+                $record['extra']['user_id'] = $GLOBALS['TSFE']->fe_user->user['uid'];
+            }
+        }
+        return $record;
+    }
 }

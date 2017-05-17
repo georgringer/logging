@@ -18,157 +18,174 @@ namespace GeorgRinger\Logging\Domain\Model\Dto;
 /**
  * Class Demand
  */
-class ListDemand {
+class ListDemand
+{
 
-	/**
-	 * @var string
-	 */
-	protected $dateStart;
+    /**
+     * @var string
+     */
+    protected $dateStart;
 
-	/**
-	 * @var string
-	 */
-	protected $dateEnd;
+    /**
+     * @var string
+     */
+    protected $dateEnd;
 
-	/**
-	 * @var array
-	 */
-	protected $levels;
+    /**
+     * @var array
+     */
+    protected $levels;
 
-	/**
-	 * @var array
-	 */
-	protected $modes;
+    /**
+     * @var array
+     */
+    protected $modes;
 
-	/**
-	 * @var string
-	 */
-	protected $requestId;
+    /**
+     * @var string
+     */
+    protected $requestId;
 
-	/**
-	 * @var array
-	 */
-	protected $channels;
+    /**
+     * @var array
+     */
+    protected $channels;
 
-	/**
-	 * @var string
-	 */
-	protected $user;
+    /**
+     * @var string
+     */
+    protected $user;
 
-	/**
-	 * @var string
-	 */
-	protected $dateRange;
+    /**
+     * @var string
+     */
+    protected $dateRange;
 
-	/**
-	 * @return string
-	 */
-	public function getDateStart() {
-		return $this->dateStart;
-	}
+    /**
+     * @return string
+     */
+    public function getDateStart()
+    {
+        return $this->dateStart;
+    }
 
-	/**
-	 * @param string $dateStart
-	 */
-	public function setDateStart($dateStart) {
-		$this->dateStart = $dateStart;
-	}
+    /**
+     * @param string $dateStart
+     */
+    public function setDateStart($dateStart)
+    {
+        $this->dateStart = $dateStart;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getDateEnd() {
-		return $this->dateEnd;
-	}
+    /**
+     * @return string
+     */
+    public function getDateEnd()
+    {
+        return $this->dateEnd;
+    }
 
-	/**
-	 * @param string $dateEnd
-	 */
-	public function setDateEnd($dateEnd) {
-		$this->dateEnd = $dateEnd;
-	}
+    /**
+     * @param string $dateEnd
+     */
+    public function setDateEnd($dateEnd)
+    {
+        $this->dateEnd = $dateEnd;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getLevels() {
-		return $this->levels;
-	}
+    /**
+     * @return array
+     */
+    public function getLevels()
+    {
+        return $this->levels;
+    }
 
-	/**
-	 * @param array $levels
-	 */
-	public function setLevels($levels) {
-		$this->levels = $levels;
-	}
+    /**
+     * @param array $levels
+     */
+    public function setLevels($levels)
+    {
+        $this->levels = $levels;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getModes() {
-		return $this->modes;
-	}
+    /**
+     * @return array
+     */
+    public function getModes()
+    {
+        return $this->modes;
+    }
 
-	/**
-	 * @param array $mode
-	 */
-	public function setModes($mode) {
-		$this->modes = $mode;
-	}
+    /**
+     * @param array $mode
+     */
+    public function setModes($mode)
+    {
+        $this->modes = $mode;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getRequestId() {
-		return $this->requestId;
-	}
+    /**
+     * @return string
+     */
+    public function getRequestId()
+    {
+        return $this->requestId;
+    }
 
-	/**
-	 * @param string $requestId
-	 */
-	public function setRequestId($requestId) {
-		$this->requestId = $requestId;
-	}
+    /**
+     * @param string $requestId
+     */
+    public function setRequestId($requestId)
+    {
+        $this->requestId = $requestId;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getChannels() {
-		return $this->channels;
-	}
+    /**
+     * @return array
+     */
+    public function getChannels()
+    {
+        return $this->channels;
+    }
 
-	/**
-	 * @param array $channels
-	 */
-	public function setChannels($channels) {
-		$this->channels = $channels;
-	}
+    /**
+     * @param array $channels
+     */
+    public function setChannels($channels)
+    {
+        $this->channels = $channels;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getUser() {
-		return $this->user;
-	}
+    /**
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 
-	/**
-	 * @param string $user
-	 */
-	public function setUser($user) {
-		$this->user = $user;
-	}
+    /**
+     * @param string $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getDateRange() {
-		return $this->dateRange;
-	}
+    /**
+     * @return string
+     */
+    public function getDateRange()
+    {
+        return $this->dateRange;
+    }
 
-	/**
-	 * @param string $dateRange
-	 */
-	public function setDateRange($dateRange) {
-		$this->dateRange = $dateRange;
-	}
+    /**
+     * @param string $dateRange
+     */
+    public function setDateRange($dateRange)
+    {
+        $this->dateRange = $dateRange;
+    }
 }
